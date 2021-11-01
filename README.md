@@ -18,7 +18,8 @@ iliketrains
 
 **Assignment 2:** <BR/>
 **Project Description:**
-X
+This assignment targets implementing web applications with an emphasis on 1) layered
+architecture, 2) handling data and ?le formats, and 3) using databases.
 
 **UML:** <BR/>
 ![alt text]()
