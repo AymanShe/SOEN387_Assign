@@ -15,7 +15,7 @@ https://github.com/RemineralizedWater/SOEN387_Assign
 **Password to Poll Manager page is:**
 iliketrains
 
-<BR/>
+
 **Assignment 2:** <BR/>
 **Project Description:**
 X
@@ -23,7 +23,7 @@ X
 **UML:** <BR/>
 ![alt text]()
 
-<BR/>
+
 **Assignment 1:** <BR/>
 **Project Description:**
 This assignment targets: 1) understanding java web technology 2) understanding http server, 
