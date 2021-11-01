@@ -27,4 +27,4 @@ https://github.com/RemineralizedWater/SOEN387_Assign
 iliketrains
 
 **UML:** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/main/UML_a1.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML_a1.png)
