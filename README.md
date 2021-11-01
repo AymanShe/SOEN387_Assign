@@ -20,7 +20,7 @@ Ayman Alshehri    - 24796810
 
 
 **Github link:**
-https://github.com/GhislainClermont/SOEN387
+https://github.com/RemineralizedWater/SOEN387_Assign
 
 
 **Password to Poll Manager page is:**
