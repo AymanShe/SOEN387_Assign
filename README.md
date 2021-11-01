@@ -27,4 +27,4 @@ https://github.com/GhislainClermont/SOEN387
 iliketrains
 
 **UML:** <BR/>
-![alt text](https://github.com/GhislainClermont/SOEN387/blob/main/UML.png)
+![alt text](https://github.com/GhislainClermont/SOEN387/blob/main/UML_a1.png)
