@@ -26,5 +26,8 @@ https://github.com/RemineralizedWater/SOEN387_Assign
 **Password to Poll Manager page is:**
 iliketrains
 
-**UML:** <BR/>
+**UML Assignment 2:** <BR/>
+![alt text]()
+
+**UML Assignment 1:** <BR/>
 ![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML_a1.png)
