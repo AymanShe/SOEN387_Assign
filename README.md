@@ -16,7 +16,7 @@ https://github.com/RemineralizedWater/SOEN387_Assign
 iliketrains
 
 
-**Assignment 2:**
+**Assignment 2:** <BR/>
 **Project Description:**
 X
 
@@ -24,7 +24,7 @@ X
 ![alt text]()
 
 
-**Assignment 1:**
+**Assignment 1:** <BR/>
 **Project Description:**
 This assignment targets: 1) understanding java web technology 2) understanding http server, 
 servlets and jsp, and request and response objects 3) understanding and processing headers,
