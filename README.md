@@ -19,7 +19,7 @@ iliketrains
 **Assignment 2:** <BR/>
 **Project Description:**
 X
-
+<BR/>
 **UML:** <BR/>
 ![alt text]()
 
@@ -29,6 +29,6 @@ X
 This assignment targets: 1) understanding java web technology 2) understanding http server, 
 servlets and jsp, and request and response objects 3) understanding and processing headers,
 content-types, and data encoding.
-
+<BR/>
 **UML:** <BR/>
 ![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML_a1.png)
