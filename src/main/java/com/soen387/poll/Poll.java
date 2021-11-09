@@ -17,7 +17,10 @@ public class Poll {
 	private Choice[] choices;
 	private int[] votes;
 	private Date releaseTime;
-	
+
+	public Poll() {
+	}
+
 	public Poll(String _name, String _question, Choice[] _choices) throws PollException {
 		if (_choices.length < 2) {
 			throw new PollException("Cannot create a Poll with less than 2 choices.");
@@ -56,7 +59,31 @@ public class Poll {
 		votes[oldChoiceIndex]--;
 		votes[newChoiceIndex]++;
 	}
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
+	public void setStatus(PollStatus status) {
+		this.status = status;
+	}
+
+	public void setChoices(Choice[] choices) {
+		this.choices = choices;
+	}
+
+	public void setVotes(int[] votes) {
+		this.votes = votes;
+	}
+
+	public void setReleaseTime(Date releaseTime) {
+		this.releaseTime = releaseTime;
+	}
+
 	public String getName() {
 		return name;
 	}
