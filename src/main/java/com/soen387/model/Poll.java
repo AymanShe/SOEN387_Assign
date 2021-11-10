@@ -1,4 +1,7 @@
-package com.soen387.poll;
+package com.soen387.model;
+
+import com.soen387.business.PollException;
+import com.soen387.business.PollStateException;
 
 import java.util.Date;
 import java.util.Hashtable;

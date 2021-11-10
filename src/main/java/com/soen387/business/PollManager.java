@@ -1,4 +1,7 @@
-package com.soen387.poll;
+package com.soen387.business;
+
+import com.soen387.model.Choice;
+import com.soen387.model.Poll;
 
 import java.io.PrintWriter;
 import java.io.Serializable;

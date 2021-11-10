@@ -1,9 +1,8 @@
-package com.soen387.dao;
+package com.soen387.dataaccess;
 
-import com.soen387.poll.Poll;
+import com.soen387.model.Poll;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

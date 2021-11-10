@@ -1,4 +1,6 @@
-import com.soen387.poll.PollManager;
+package com.soen387.controller;
+
+import com.soen387.business.PollManager;
 
 import java.io.*;
 import javax.servlet.ServletException;

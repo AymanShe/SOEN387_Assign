@@ -1,10 +1,10 @@
-<%@ page import="com.soen387.poll.Poll" %>
-<%@ page import="com.soen387.poll.Choice" %>
+<%@ page import="com.soen387.model.Poll" %>
+<%@ page import="com.soen387.model.Choice" %>
 <%@ page import="java.util.Hashtable" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-<jsp:useBean id='poll' class='com.soen387.poll.PollManager' scope="application"/>
+<jsp:useBean id='poll' class='com.soen387.business.PollManager' scope="application"/>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -95,6 +95,6 @@
     <h2>No Google chart as Poll Not Yet Released</h2>
     <%}%>
     <br/>
-    <a href="<% out.print(request.getContextPath()); %>/index.jsp">Return to Home Page</a>
+    <a href="<% out.print(request.getContextPath()); %>/WEB-INF/views/index.jspiews/index.jsp">Return to Home Page</a>
 </body>
 </html>

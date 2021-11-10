@@ -7,7 +7,7 @@
     <title>Polling System - Landing Page</title>
 </head>
 <body class="container">
-    <jsp:useBean id='poll' class='com.soen387.poll.PollManager' scope="application"/>
+    <jsp:useBean id='poll' class='com.soen387.business.PollManager' scope="application"/>
     <br/>
     <h1>Polling System</h1>
     <br/>

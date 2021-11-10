@@ -1,5 +1,7 @@
-import com.soen387.poll.PollException;
-import com.soen387.poll.PollManager;
+package com.soen387.controller;
+
+import com.soen387.business.PollException;
+import com.soen387.business.PollManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "VoteServlet")
+@WebServlet(name = "com.soen387.controller.VoteServlet")
 public class VoteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get the poll manager

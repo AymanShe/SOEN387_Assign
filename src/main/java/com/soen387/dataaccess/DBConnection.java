@@ -1,4 +1,4 @@
-package com.soen387.dao;
+package com.soen387.dataaccess;
 
 import java.io.IOException;
 import java.io.InputStream;

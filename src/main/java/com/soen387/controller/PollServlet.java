@@ -1,7 +1,7 @@
 package com.soen387.controller;
 
-import com.soen387.dao.PollDao;
-import com.soen387.poll.Poll;
+import com.soen387.dataaccess.PollDao;
+import com.soen387.model.Poll;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,14 +29,14 @@ public class PollServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("polldeatil.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/polldeatil.jsp");
         dispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.getWriter().append("Served at: ").append(request.getContextPath());
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("createpoll.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/createpoll.jsp");
         dispatcher.forward(request, response);
     }
 }

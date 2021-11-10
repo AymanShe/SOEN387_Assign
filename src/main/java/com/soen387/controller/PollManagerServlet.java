@@ -1,10 +1,13 @@
+package com.soen387.controller;
+
 import java.io.*;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import com.soen387.poll.*;
+
+import com.soen387.model.Choice;
+import com.soen387.business.*;
 
 @WebServlet(name = "pollManagerServlet", value = "/poll-manager-servlet")
 public class PollManagerServlet extends HttpServlet {
