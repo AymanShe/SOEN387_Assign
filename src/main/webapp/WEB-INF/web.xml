@@ -5,7 +5,7 @@
          version="4.0">
     <servlet>
         <servlet-name>HelloWorldServlet</servlet-name>
-        <servlet-class>HelloServlet</servlet-class>
+        <servlet-class>com.soen387.controller.HelloServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HelloWorldServlet</servlet-name>
@@ -13,7 +13,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>PollManagerServlet</servlet-name>
-        <servlet-class>PollManagerServlet</servlet-class>
+        <servlet-class>com.soen387.controller.PollManagerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PollManagerServlet</servlet-name>
@@ -21,7 +21,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>DownloadPollServlet</servlet-name>
-        <servlet-class>DownloadPollServlet</servlet-class>
+        <servlet-class>com.soen387.controller.DownloadPollServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DownloadPollServlet</servlet-name>
@@ -29,9 +29,10 @@
     </servlet-mapping>
 
 
+
     <servlet>
         <servlet-name>VoteServlet</servlet-name>
-        <servlet-class>VoteServlet</servlet-class>
+        <servlet-class>com.soen387.controller.VoteServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>VoteServlet</servlet-name>
@@ -40,6 +41,6 @@
 
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>/WEB-INF/views/index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

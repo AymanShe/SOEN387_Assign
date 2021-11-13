@@ -10,6 +10,6 @@
     <% out.print(((Exception)request.getAttribute("error")).toString()); %>
 </h1>
 <br/>
-<a href="<% out.print(request.getContextPath()); %>/index.jsp">Return to home page</a>
+<a href="<% out.print(request.getContextPath()); %>">Return to home page</a>
 </body>
 </html>

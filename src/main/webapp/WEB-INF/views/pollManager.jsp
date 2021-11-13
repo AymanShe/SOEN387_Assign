@@ -7,7 +7,7 @@
     <title>Polling System - Poll Manager Entry</title>
 </head>
 <body class="container">
-    <jsp:useBean id='poll' class='com.soen387.poll.PollManager' scope="application"/>
+    <jsp:useBean id='poll' class='com.soen387.business.PollManager' scope="application"/>
     <br/>
     <h1 class="">Poll Manager</h1>
     <%
@@ -41,6 +41,6 @@
         }
     %>
     <br/>
-    <a href="<% out.print(request.getContextPath()); %>/index.jsp">Return to Home Page</a>
+    <a href="<% out.print(request.getContextPath()); %>">Return to Home Page</a>
 </body>
 </html>

@@ -1,11 +1,13 @@
-import com.soen387.poll.PollManager;
+package com.soen387.controller;
+
+import com.soen387.business.PollManager;
 
 import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "downloadServlet", value = "/download-servlet")
+@WebServlet(name = "downloadServlet", value = "/Download")
 public class DownloadPollServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -20,7 +22,7 @@ public class DownloadPollServlet extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("error", e);
             System.out.println(e);
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            request.getRequestDispatcher(Constants.ViewsBaseLink + "error.jsp").forward(request, response);
             return;
         }
     }

@@ -1,4 +1,4 @@
-package com.soen387.poll;
+package com.soen387.business;
 
 public class PollNotFoundException extends PollException {
 

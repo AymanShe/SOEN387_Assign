@@ -1,5 +1,6 @@
-import com.soen387.poll.PollException;
-import com.soen387.poll.PollManager;
+package com.soen387.controller;
+
+import com.soen387.business.PollManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,28 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "VoteServlet")
-public class VoteServlet extends HttpServlet {
+@WebServlet(name = "DownloadServlet", value = "/download")
+public class DownloadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //get the poll manager
-        PollManager pollManager = (PollManager)getServletContext().getAttribute("poll");
 
-        //get the vote attribute
-        //get choice
-        String voteValue = request.getParameter("choice");
-        int voteValueAsInt = Integer.parseInt(voteValue);
-        //get session id
-        String sessionId = request.getRequestedSessionId();
-        //record the vote
-        try {
-            pollManager.vote(sessionId, voteValueAsInt);
-            //return
-            response.sendRedirect(request.getContextPath() + "/vote.jsp");
-        } catch (PollException e) {
-            request.setAttribute("error", e);
-            System.out.println(e);
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,7 +27,7 @@ public class VoteServlet extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("error", e);
             System.out.println(e);
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            request.getRequestDispatcher(Constants.ViewsBaseLink + "error.jsp").forward(request, response);
             return;
         }
     }
