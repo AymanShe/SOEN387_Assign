@@ -13,7 +13,16 @@ public class Poll {
 		running, 
 		released;
 	}
-	
+	private String pollId;
+
+	public String getPollId() {
+		return pollId;
+	}
+
+	public void setPollId(String pollId) {
+		this.pollId = pollId;
+	}
+
 	private String name;
 	private String question;
 	private PollStatus status;
