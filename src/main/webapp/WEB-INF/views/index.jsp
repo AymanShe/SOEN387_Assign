@@ -1,3 +1,4 @@
+<%@ page import="com.soen387.controller.Constants" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -14,9 +15,9 @@
     <a href="PollManager">Poll Manager</a>
     <br/>
     <br/>
-    <a href="Vote">Download Poll</a>
+    <a href="Download">Download Poll</a>
     <br/>
     <br/>
-    <a href="vote.jsp">Submit Vote</a>
+    <a href="Vote">Submit Vote</a>
 </body>
 </html>

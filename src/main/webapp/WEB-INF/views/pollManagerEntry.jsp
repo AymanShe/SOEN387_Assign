@@ -17,6 +17,6 @@
     </form>
 </h1>
 <br/>
-    <a href="<% out.print(request.getContextPath()); %>/WEB-INF/views/index.jspiews/index.jsp">Return to home page</a>
+    <a href="<% out.print(request.getContextPath()); %>">Return to home page</a>
 </body>
 </html>

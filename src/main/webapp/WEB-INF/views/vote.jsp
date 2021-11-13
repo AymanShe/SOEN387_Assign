@@ -95,6 +95,6 @@
     <h2>No Google chart as Poll Not Yet Released</h2>
     <%}%>
     <br/>
-    <a href="<% out.print(request.getContextPath()); %>/WEB-INF/views/index.jspiews/index.jsp">Return to Home Page</a>
+    <a href="<% out.print(request.getContextPath()); %>">Return to Home Page</a>
 </body>
 </html>

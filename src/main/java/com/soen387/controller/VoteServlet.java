@@ -27,27 +27,15 @@ public class VoteServlet extends HttpServlet {
         try {
             pollManager.vote(sessionId, voteValueAsInt);
             //return
-            response.sendRedirect(request.getContextPath() + "/vote.jsp");
+            request.getRequestDispatcher(Constants.ViewsBaseLink + "vote.jsp").forward(request, response);
         } catch (PollException e) {
             request.setAttribute("error", e);
             System.out.println(e);
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            request.getRequestDispatcher(Constants.ViewsBaseLink + "error.jsp").forward(request, response);
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PollManager pollManager = (PollManager)getServletContext().getAttribute("poll");
-        response.setDateHeader("Expires", 0);
-        PrintWriter out = response.getWriter();
-        try {
-            StringBuilder fileName = new StringBuilder();
-            pollManager.downloadPollDetails(out, fileName);
-            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-        } catch (Exception e) {
-            request.setAttribute("error", e);
-            System.out.println(e);
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
-            return;
-        }
+        request.getRequestDispatcher(Constants.ViewsBaseLink + "vote.jsp").forward(request, response);
     }
 }

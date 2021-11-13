@@ -23,11 +23,11 @@ public class PollManagerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         System.out.println(session.getAttribute("ManagerAccess"));
         if (session.getAttribute("ManagerAccess") == "true") {
-            RequestDispatcher view = request.getRequestDispatcher("/pollManager.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(Constants.ViewsBaseLink + "/pollManager.jsp");
             System.out.println(getServletContext().getAttribute("poll"));
             view.forward(request, response);
         } else {
-            RequestDispatcher view = request.getRequestDispatcher("/pollManagerEntry.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(Constants.ViewsBaseLink + "/pollManagerEntry.jsp");
             view.forward(request, response);
         }
 
@@ -190,7 +190,7 @@ public class PollManagerServlet extends HttpServlet {
     private void forwardError(HttpServletRequest request, HttpServletResponse response, Exception e) throws IOException, ServletException {
         request.setAttribute("error", e);
         System.out.println(e);
-        request.getRequestDispatcher("../error.jsp").forward(request, response);
+        request.getRequestDispatcher(Constants.ViewsBaseLink + "error.jsp").forward(request, response);
 
     }
 
