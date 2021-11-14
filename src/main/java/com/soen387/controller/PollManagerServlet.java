@@ -8,6 +8,7 @@ import javax.servlet.annotation.*;
 
 import com.soen387.model.Choice;
 import com.soen387.business.*;
+import com.soen387.model.UserBase;
 
 @WebServlet(name = "pollManagerServlet", value = "/poll-manager-servlet")
 public class PollManagerServlet extends HttpServlet {
@@ -67,9 +68,14 @@ public class PollManagerServlet extends HttpServlet {
     }
 
     private void confirmPassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserBase userBase = new UserBase();
+        userBase.loadUserBase(Utility.readProperties("userbaseInfo.properties").getProperty("userbase.path"));
+
+        String enteredUsername = request.getParameter("username");
         String enteredPassword = request.getParameter("password");
-        if (enteredPassword.compareTo("iliketrains") == 0) {
+        if (userBase.login(enteredUsername, enteredPassword)) {
             request.getSession().setAttribute("ManagerAccess", "true");
+            request.getSession().setAttribute("UserID", userBase.getUserByName(enteredUsername));
         }
 
         response.sendRedirect(request.getContextPath() + "/PollManager");
