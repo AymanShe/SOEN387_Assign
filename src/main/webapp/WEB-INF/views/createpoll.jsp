@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-group card">
                     <div class="card-header">
-                        <label for="choiceName3" class="col-form-label">Choice #2</label>
+                        <label for="choiceName3" class="col-form-label">Choice #3</label>
                         <span style="font-size: 1.5rem; color: darkgrey;" class="float-right">
                             <i class="fas fa-trash-alt"></i>
                         </span>

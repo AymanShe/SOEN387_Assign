@@ -1,8 +1,10 @@
 package com.soen387.controller;
 
+import com.soen387.business.PollManager;
 import com.soen387.dataaccess.PollDao;
 import com.soen387.model.Choice;
 import com.soen387.model.Poll;
+import com.soen387.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,10 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(value = "/create")
-public class PollServlet extends HttpServlet {
+@WebServlet(name="CreatePollServlet" , value = "/create")
+public class CreatePollServlet extends HttpServlet {
 
-    private PollDao pollDao = new PollDao();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         String question = request.getParameter("question");
@@ -24,6 +25,9 @@ public class PollServlet extends HttpServlet {
         Poll poll = new Poll();
         poll.setName(name);
         poll.setQuestion(question);
+
+        User user = (User)request.getSession().getAttribute("UserID");
+        poll.setCreatedBy(user.getName());
 
         Choice choice1 = new Choice(request.getParameter("choiceName1"), request.getParameter("choiceDesc1"));
         choice1.setNumber(1);
@@ -36,18 +40,17 @@ public class PollServlet extends HttpServlet {
 
         //TODO validate the input
 
+        PollManager pollManager = new PollManager();
         try {
-            pollDao.createPoll(poll);
-        } catch (ClassNotFoundException | SQLException e) {
+            pollManager.createPoll(poll);
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.ViewsBaseLink + "polldeatil.jsp");
-        dispatcher.forward(request, response);
+
+        response.sendRedirect(request.getContextPath() + "/manage/" + poll.getPollId());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.ViewsBaseLink + "createpoll.jsp");
         dispatcher.forward(request, response);
     }

@@ -1,16 +1,22 @@
 package com.soen387.business;
 
+import com.soen387.dataaccess.PollDao;
 import com.soen387.model.Choice;
 import com.soen387.model.Poll;
 
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Hashtable;
+import java.util.Timer;
 
 public class PollManager implements Serializable {
 
 	private Poll poll;
 	private Hashtable<String, Integer> voters;
+	private PollDao pollDao = new PollDao();
 	
 	public PollManager() {
 		poll = null;
@@ -25,6 +31,14 @@ public class PollManager implements Serializable {
 		try {
 			poll = new Poll(name, question, choices);
 		} catch (PollException e) {
+			throw e;
+		}
+	}
+
+	public  void createPoll(Poll poll) throws SQLException, ClassNotFoundException {
+		try {
+			pollDao.createPoll(poll);
+		} catch (ClassNotFoundException | SQLException e) {
 			throw e;
 		}
 	}
@@ -170,12 +184,47 @@ public class PollManager implements Serializable {
             throw new PollStateException("Cannot download the poll results while the Poll is not in the released state.");
         }
 
-		String name = poll.getName() + "-" + poll.getReleaseTime().toString() + ".txt";
+		String name = poll.getName() + "-" + poll.getReleaseDate().toString() + ".txt";
 		fileName.delete(0, fileName.length());
 		fileName.append(name);
 
 		output.print(poll.toString());
 
 		return name;
+	}
+
+	public Poll getPoll(String pollId) {
+		return pollDao.getPoll(pollId);
+	}
+
+	public void realeasePoll(Poll poll) {
+		//TODO check if action is allowed
+		poll.setStatus(Poll.PollStatus.released);
+		poll.setReleaseDate(new Date());
+		pollDao.updatePoll(poll);
+	}
+
+	public void unrealeasePoll(Poll poll) {
+		//TODO check if action is allowed
+		poll.setStatus(Poll.PollStatus.running);
+		poll.setReleaseDate(null);
+		pollDao.updatePoll(poll);
+	}
+
+	public void closePoll(Poll poll) {
+		//TODO check if action is allowed
+		poll.setStatus(Poll.PollStatus.closed);
+		pollDao.updatePoll(poll);
+	}
+
+	public void deletePoll(Poll poll) {
+		//TODO check if action is allowed
+		pollDao.deletePoll(poll);
+	}
+
+	public void runPoll(Poll poll) {
+		//TODO check if action is allowed
+		poll.setStatus(Poll.PollStatus.running);
+		pollDao.updatePoll(poll);
 	}
 }
