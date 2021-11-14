@@ -1,5 +1,6 @@
 package com.soen387.model;
 
+import com.soen387.controller.Utility;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,66 +22,43 @@ public class UserBase {
         highestId = 0;
     }
 
-    public void loadUserBase(String filePath) {
+    public void loadUserBase(JSONArray userListJson) {
         userList = new LinkedList<User>();
         highestId = 0;
 
         String userListJsonString = "";
-        File file = new File(filePath);
-        System.out.println(file.getAbsolutePath());
-        try (Scanner scanner = new Scanner(file)) {
-            scanner.useDelimiter("\\Z");
-            userListJsonString = scanner.next();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         System.out.println(userListJsonString);
 
         JSONParser parser = new JSONParser();
 
-        try {
-            JSONArray userListJson = (JSONArray) parser.parse(userListJsonString);
+        for (int i = 0; i < userListJson.size(); i++) {
+            JSONObject userJson = (JSONObject) userListJson.get(i);
+            int id = ((Long)userJson.get("id")).intValue();
+            String name = (String) userJson.get("name");
+            String password = (String) userJson.get("password");
+            String email = (String) userJson.get("email");
 
-            for (int i = 0; i < userListJson.size(); i++) {
-                JSONObject userJson = (JSONObject) userListJson.get(i);
-                int id = ((Long)userJson.get("id")).intValue();
-                String name = (String) userJson.get("name");
-                String password = (String) userJson.get("password");
-                String email = (String) userJson.get("email");
+            if (id > highestId) highestId = id;
 
-                if (id > highestId) highestId = id;
-
-                userList.add(new User(id, name, password, email));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+            userList.add(new User(id, name, password, email));
         }
-        //JSONArray userListJson = new JSONArray(filePath);
-
-
     }
 
-    public void saveUserBase(String filePath) {
+    public JSONArray toJson() {
         JSONArray userListJson = new JSONArray();
         for (User user : userList) {
             userListJson.add(user.toJson());
         }
 
-        File file = new File(filePath);
-        System.out.println(file.getAbsolutePath());
+        return userListJson;
 
-        try (FileWriter fileWriter = new FileWriter(file)) {
-            fileWriter.write(userListJson.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void createUser(String name, String password, String email) {
         boolean nameAvailable = true;
         for (User user : userList) {
-            if (user.getName().compareTo(name) == 0) {
+            if (user.getName().compareToIgnoreCase(name) == 0) {
                 nameAvailable = false;
                 break;
             }
@@ -103,7 +81,7 @@ public class UserBase {
 
     public User getUserByName(String name) {
         for (User user : userList) {
-            if (user.getName().compareTo(name) == 0) {
+            if (user.getName().compareToIgnoreCase(name) == 0) {
                 return user;
             }
         }
