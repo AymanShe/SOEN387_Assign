@@ -10,7 +10,11 @@
 <br/>
     <form action="PollManager/confirmPassword" method="post">
         <div>
-            <label for="pass">Please enter the Poll Manager password:</label>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="pass">Password:</label>
             <input type="password" id="pass" name="password" required>
         </div>
         <input name="passwordButton" type="submit" value="Enter" class="btn-primary">
