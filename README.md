@@ -22,7 +22,9 @@ This assignment targets implementing web applications with an emphasis on 1) lay
 architecture, 2) handling data and file formats, and 3) using databases.
 
 **Instructions:**
-In IntelliJ, you need to add the json-simple-1.1.1.jar library manually. Click File, Project Structure, Libraries, +, Java, then go to folder <project>\src\main\webapp\WEB-INF\lib and add json-simple.1.1.1.jar, then click OK, and finally OK.
+In IntelliJ, you need to add two libraries manually. Click File, Project Structure, Libraries, +, Java, then go to folder <project>\src\main\webapp\WEB-INF\lib and add json-simple.1.1.1.jar, then click OK, OK, and finally OK. Then repeat these steps for jstl-1.2.jar in the same folder.
+  
+Also, you need to manually create the folder c:\soen387 then add https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/userbase.json manually to the folder.
 
 **UML:** <BR/>
 ![alt text]()
