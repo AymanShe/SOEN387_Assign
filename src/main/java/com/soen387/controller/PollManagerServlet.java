@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
+import com.soen387.dataaccess.UserBaseLoader;
 import com.soen387.model.Choice;
 import com.soen387.business.*;
 import com.soen387.model.UserBase;
@@ -68,11 +69,12 @@ public class PollManagerServlet extends HttpServlet {
     }
 
     private void confirmPassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserBase userBase = new UserBase();
-        userBase.loadUserBase(Utility.readProperties("userbaseInfo.properties").getProperty("userbase.path"));
+        UserBase userBase = UserBaseLoader.getUserBase();
+        //userBase.hashAllPasswords();
 
         String enteredUsername = request.getParameter("username");
         String enteredPassword = request.getParameter("password");
+        System.out.println(userBase.login(enteredUsername, enteredPassword));
         if (userBase.login(enteredUsername, enteredPassword)) {
             request.getSession().setAttribute("ManagerAccess", "true");
             request.getSession().setAttribute("UserID", userBase.getUserByName(enteredUsername));
