@@ -3,15 +3,17 @@ package com.soen387.model;
 import com.soen387.business.PollException;
 import com.soen387.business.PollStateException;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Hashtable;
 
-public class Poll {
+public class Poll implements Serializable {
 
 	public enum PollStatus {
 		created, 
 		running, 
-		released;
+		released,
+		closed;
 	}
 	private String pollId;
 
@@ -28,7 +30,16 @@ public class Poll {
 	private PollStatus status;
 	private Choice[] choices;
 	private int[] votes;
-	private Date releaseTime;
+	private Date releaseDate;
+	private String createdBy;
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
 	public Poll() {
 	}
@@ -42,7 +53,7 @@ public class Poll {
 		status = PollStatus.created;
 		choices = _choices;
 		votes = new int[choices.length];
-		releaseTime = null;
+		releaseDate = null;
 	}
 
 	// Deep copy
@@ -55,8 +66,8 @@ public class Poll {
 			choices[i] = new Choice(poll.getChoices()[i]);
 		}
 		votes = poll.getVotes().clone();
-		if (poll.getReleaseTime() != null){
-			releaseTime = new Date(poll.getReleaseTime().getTime());
+		if (poll.getReleaseDate() != null){
+			releaseDate = new Date(poll.getReleaseDate().getTime());
 		}
 	}
 	
@@ -92,8 +103,8 @@ public class Poll {
 		this.votes = votes;
 	}
 
-	public void setReleaseTime(Date releaseTime) {
-		this.releaseTime = releaseTime;
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
 	public String getName() {
@@ -116,7 +127,7 @@ public class Poll {
 		return votes;
 	}
 
-	public Date getReleaseTime() { return releaseTime; }
+	public Date getReleaseDate() { return releaseDate; }
 
 	public void update(String _name, String _question, Choice[] _choices) throws PollException {
 		if (status != PollStatus.running) {
@@ -143,7 +154,7 @@ public class Poll {
 		
 		if (status == PollStatus.released) {
 			status = PollStatus.created;
-			releaseTime = null;
+			releaseDate = null;
 		}
 	}
 	
@@ -161,7 +172,7 @@ public class Poll {
 		}
 
 		status = PollStatus.released;
-		releaseTime = new Date();
+		releaseDate = new Date();
 	}
 	
 	public void unrelease() throws PollStateException {
@@ -170,7 +181,7 @@ public class Poll {
 		}
 		
 		status = PollStatus.running;
-		releaseTime = null;
+		releaseDate = null;
 	}
 	
 	public Hashtable<Integer, Integer> getResults() throws PollStateException {

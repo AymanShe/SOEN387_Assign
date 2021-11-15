@@ -4,14 +4,15 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Create a new Poll</title>
+    <%@ include file="sharedViews/head.html" %>
 </head>
 <body>
-<%@ include file="sharedViews/header.jsp" %>
+<%@ include file="sharedViews/navbar.jsp" %>
 <div class="container">
     <h1>New Poll Form</h1>
     <div class="card">
         <div class="card-body">
-            <form action="<%= request.getContextPath() %>/create" method="post">
+            <form action="<%= request.getContextPath() %>/Create" method="post">
                 <div class="form-group row">
                     <label for="name" class="col-md-2 col-form-label">Poll Title</label>
                     <div class="col-md-8">
@@ -63,7 +64,7 @@
                 </div>
                 <div class="form-group card">
                     <div class="card-header">
-                        <label for="choiceName3" class="col-form-label">Choice #2</label>
+                        <label for="choiceName3" class="col-form-label">Choice #3</label>
                         <span style="font-size: 1.5rem; color: darkgrey;" class="float-right">
                             <i class="fas fa-trash-alt"></i>
                         </span>
@@ -88,5 +89,7 @@
         </div>
     </div>
 </div>
+
+<%@ include file="sharedViews/footer.html" %>
 </body>
 </html>

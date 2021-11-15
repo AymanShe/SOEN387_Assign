@@ -3,11 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <%@ include file="sharedViews/head.html" %>
     <title>Polling System - Landing Page</title>
 </head>
-<body class="container">
+<body>
+<%@ include file="sharedViews/navbar.jsp" %>
+<div class="container">
+
     <jsp:useBean id='poll' class='com.soen387.business.PollManager' scope="application"/>
     <br/>
     <h1>Polling System</h1>
@@ -19,5 +21,7 @@
     <br/>
     <br/>
     <a href="Vote">Submit Vote</a>
+</div>
+<%@ include file="sharedViews/footer.html" %>
 </body>
 </html>

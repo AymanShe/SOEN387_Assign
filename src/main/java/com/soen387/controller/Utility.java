@@ -8,7 +8,7 @@ import java.util.Random;
 public abstract class Utility {
     public static String generatePollId(){
         Random rd = new Random();
-        String abc = "abcdefghjkmnpqrstvwxyz0123456789";
+        String abc = "ABCDEFGHJKMNPQRSTVWXYZ0123456789";
         char character = 0;
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
