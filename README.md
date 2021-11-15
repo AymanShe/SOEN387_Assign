@@ -21,6 +21,9 @@ iliketrains
 This assignment targets implementing web applications with an emphasis on 1) layered
 architecture, 2) handling data and file formats, and 3) using databases.
 
+**Instructions:**
+In IntelliJ, you need to add the json-simple-1.1.1.jar library manually. Click File, Project Structure, +, Java, then go to folder <project>\src\main\webapp\WEB-INF\lib and add json-simple.1.1.1.jar, then click OK, and finally OK.
+
 **UML:** <BR/>
 ![alt text]()
 
