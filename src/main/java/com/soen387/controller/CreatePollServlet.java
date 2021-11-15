@@ -28,14 +28,23 @@ public class CreatePollServlet extends HttpServlet {
 
         poll.setCreatedBy(SessionManager.getAuthenticatedUserName(request.getSession()));
 
-        Choice choice1 = new Choice(request.getParameter("choiceName1"), request.getParameter("choiceDesc1"));
-        choice1.setNumber(1);
-        Choice choice2 = new Choice(request.getParameter("choiceName2"), request.getParameter("choiceDesc2"));
-        choice2.setNumber(2);
-        Choice choice3 = new Choice(request.getParameter("choiceName3"), request.getParameter("choiceDesc3"));
-        choice3.setNumber(3);
+        String[] choiceNames = request.getParameterValues("choiceName");
+        String[] choiceDescs = request.getParameterValues("choiceDesc");
+        Choice[] choices = new Choice[choiceNames.length];
 
-        poll.setChoices(new Choice[]{choice1,choice2,choice3});
+        for (int i = 0; i < choiceNames.length; i++) {
+            choices[i] = new Choice(choiceNames[i], choiceDescs[i]);
+            System.out.println("Question #" + (i + 1) + ": [" + choiceNames[i] + "] " + choiceDescs[i]);
+        }
+
+        //Choice choice1 = new Choice(request.getParameter("choiceName1"), request.getParameter("choiceDesc1"));
+        //choice1.setNumber(1);
+        //Choice choice2 = new Choice(request.getParameter("choiceName2"), request.getParameter("choiceDesc2"));
+        //choice2.setNumber(2);
+        //Choice choice3 = new Choice(request.getParameter("choiceName3"), request.getParameter("choiceDesc3"));
+        //choice3.setNumber(3);
+
+        poll.setChoices(choices);
 
         //TODO validate the input
 
