@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Timer;
 
 public class PollManager implements Serializable {
@@ -227,4 +228,8 @@ public class PollManager implements Serializable {
 		poll.setStatus(Poll.PollStatus.running);
 		pollDao.updatePoll(poll);
 	}
+
+    public List<Poll> getPollsByUserName(String userName) {
+		return pollDao.getPollByUserName(userName);
+    }
 }

@@ -9,9 +9,11 @@
 <jsp:useBean id="ManagedPoll" class="com.soen387.model.Poll" scope="request" />
 <html>
 <head>
+    <%@ include file="sharedViews/head.html" %>
     <title>Title</title>
 </head>
 <body>
+<%@ include file="sharedViews/navbar.jsp" %>
 Poll ID: <%= ManagedPoll.getPollId() %> <br/>
 Poll Question: <%= ManagedPoll.getQuestion() %> <br/>
 Poll Status: <%= ManagedPoll.getStatus() %> <br/>
@@ -41,5 +43,6 @@ Release date: <%= ManagedPoll.getReleaseDate() %> <br/>
 
 
 
+<%@ include file="sharedViews/footer.html" %>
 </body>
 </html>

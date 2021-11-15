@@ -5,6 +5,8 @@ import com.soen387.model.Choice;
 import com.soen387.model.Poll;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PollDao {
     public int createPoll(Poll poll) throws SQLException, ClassNotFoundException {
@@ -127,6 +129,32 @@ public class PollDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<Poll> getPollByUserName(String userName) {
+        List<Poll> polls = new ArrayList<>();
+
+        String getPollQuery = "SELECT * FROM poll WHERE created_by = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement getPollStatement = connection.prepareStatement(getPollQuery)) {
+
+            getPollStatement.setString(1, userName);
+
+            ResultSet result = getPollStatement.executeQuery();
+            while (result.next()) {
+                Poll poll = new Poll();
+                poll.setPollId(result.getString("poll_id"));
+                poll.setName(result.getString("title"));
+                poll.setQuestion(result.getString("question"));
+                poll.setStatus(Poll.PollStatus.valueOf(result.getString("status")));
+                poll.setReleaseDate(result.getTimestamp("release_timestamp"));
+                polls.add(poll);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return polls;
         }
     }
 }

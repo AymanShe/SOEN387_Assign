@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name="CreatePollServlet" , value = "/create")
+@WebServlet(name="CreatePollServlet" , value = {"/Create", "/create"})
 public class CreatePollServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,8 +26,7 @@ public class CreatePollServlet extends HttpServlet {
         poll.setName(name);
         poll.setQuestion(question);
 
-        User user = (User)request.getSession().getAttribute("UserID");
-        poll.setCreatedBy(user.getName());
+        poll.setCreatedBy(SessionManager.getAuthenticatedUserName(request.getSession()));
 
         Choice choice1 = new Choice(request.getParameter("choiceName1"), request.getParameter("choiceDesc1"));
         choice1.setNumber(1);
@@ -51,6 +50,10 @@ public class CreatePollServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(!SessionManager.isUserAuthenticated(request.getSession())){
+            response.sendRedirect(request.getContextPath() + "/Login?returnurl=create");
+            return;
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.ViewsBaseLink + "createpoll.jsp");
         dispatcher.forward(request, response);
     }

@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet(name = "ManagePollServlet", value = "/manage/*")
+@WebServlet(name = "ManagePollServlet", value = {"/manage/*","/Manage/*"})
 public class ManagePollServlet extends HttpServlet {
     PollManager pollManager = new PollManager();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,16 +46,36 @@ public class ManagePollServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(!SessionManager.isUserAuthenticated(request.getSession())){
+            response.sendRedirect(request.getContextPath() + "/Login?returnurl=manage");
+            return;
+        }
         //fetch the poll using the PollManager
         String pathInfo = request.getPathInfo();
-        String pollId = pathInfo.substring(1);
-        Poll poll = pollManager.getPoll(pollId);
+        if (pathInfo != null && !pathInfo.isEmpty()){
+            String pollId = pathInfo.substring(1);
+            Poll poll = pollManager.getPoll(pollId);
 
-        //pass the poll as a bean
-        request.setAttribute("ManagedPoll", poll);
+            //pass the poll as a bean
+            request.setAttribute("ManagedPoll", poll);
 
-        //forward to the view page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/" + Constants.ViewsBaseLink + "managepoll.jsp");
-        dispatcher.forward(request, response);
+            //forward to the view page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/" + Constants.ViewsBaseLink + "managepoll.jsp");
+            dispatcher.forward(request, response);
+        }else{
+            //fetch user id
+            String userName = SessionManager.getAuthenticatedUserName(request.getSession());
+
+            //fetch polls
+            List<Poll> polls = pollManager.getPollsByUserName(userName);
+
+            //pass the polls as a bean
+            request.setAttribute("polls", polls);
+
+            //forward
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/" + Constants.ViewsBaseLink + "polllist.jsp");
+            dispatcher.forward(request, response);
+        }
+
     }
 }
