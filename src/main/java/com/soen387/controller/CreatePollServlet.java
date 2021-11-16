@@ -34,6 +34,7 @@ public class CreatePollServlet extends HttpServlet {
 
         for (int i = 0; i < choiceNames.length; i++) {
             choices[i] = new Choice(choiceNames[i], choiceDescs[i]);
+            choices[i].setNumber(i);
             System.out.println("Question #" + (i + 1) + ": [" + choiceNames[i] + "] " + choiceDescs[i]);
         }
 
