@@ -10,6 +10,7 @@ import java.util.List;
 
 public class PollDao {
     public int createPoll(Poll poll) throws SQLException, ClassNotFoundException {
+        //TODO don't pass business objects rather pass attributes
 
         //assign a poll id
         poll.setPollId(Utility.generatePollId());
@@ -68,19 +69,35 @@ public class PollDao {
         Poll poll = new Poll();
 
         String getPollQuery = "SELECT * FROM poll WHERE poll_id = ?";
+        //TODO recomended to make all query use named parameter
+        String getChoicesQuery = "SELECT * FROM choice WHERE poll_id = ?";
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement getPollStatement = connection.prepareStatement(getPollQuery)) {
+             PreparedStatement getPollStatement = connection.prepareStatement(getPollQuery);
+             PreparedStatement getChoicesStatement = connection.prepareStatement(getChoicesQuery)) {
 
             getPollStatement.setString(1, pollId);
 
-            ResultSet result = getPollStatement.executeQuery();
-            if (result.next()) {
-                poll.setPollId(result.getString("poll_id"));
-                poll.setName(result.getString("title"));
-                poll.setQuestion(result.getString("question"));
-                poll.setStatus(Poll.PollStatus.valueOf(result.getString("status")));
-                poll.setReleaseDate(result.getTimestamp("release_timestamp"));
+            ResultSet pollResult = getPollStatement.executeQuery();
+            if (pollResult.next()) {
+                poll.setPollId(pollResult.getString("poll_id"));
+                poll.setName(pollResult.getString("title"));
+                poll.setQuestion(pollResult.getString("question"));
+                poll.setStatus(Poll.PollStatus.valueOf(pollResult.getString("status")));
+                poll.setReleaseDate(pollResult.getTimestamp("release_timestamp"));
             }
+
+            getChoicesStatement.setString(1, pollId);
+            ResultSet choiceResult = getChoicesStatement.executeQuery();
+            List<Choice> choicesAsList = new ArrayList<>();
+            while (choiceResult.next()) {
+                Choice choice = new Choice();
+                choice.setText(choiceResult.getString("text"));
+                choice.setDescription(choiceResult.getString("description"));
+                choice.setNumber(choiceResult.getInt("choice_number"));
+                choicesAsList.add(choice);
+            }
+            Choice[] choices = choicesAsList.toArray(new Choice[choicesAsList.size()]);
+            poll.setChoices(choices);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -156,5 +173,44 @@ public class PollDao {
         } finally {
             return polls;
         }
+    }
+
+    public void editPoll(Poll poll) throws SQLException {
+        //update poll title and question
+
+        String updatePollQuery = "UPDATE poll set title = ?, question = ? WHERE poll_id = ?";
+        String deleteChoicesQuery = "DELETE FROM choice WHERE poll_id = ?";
+        String insertChoiceQuery = "INSERT INTO choice (poll_id, text, description, choice_number) values (?, ? ,? ,?)";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement updatePollStatement = connection.prepareStatement(updatePollQuery);
+             PreparedStatement deleteChoicesStatement = connection.prepareStatement(deleteChoicesQuery);
+             PreparedStatement insertChoiceStatement = connection.prepareStatement(insertChoiceQuery)) {
+
+            updatePollStatement.setString(1, poll.getName());
+            updatePollStatement.setString(2, poll.getQuestion());
+            updatePollStatement.setString(3, poll.getPollId());
+
+            int updatePollResult = updatePollStatement.executeUpdate();
+
+            deleteChoicesStatement.setString(1, poll.getPollId());
+            int deleteChoiceResult = deleteChoicesStatement.executeUpdate();
+
+            for (Choice c : poll.getChoices()) {
+                insertChoiceStatement.setString(1, poll.getPollId());
+                insertChoiceStatement.setString(2, c.getText());
+                if (c.getDescription() == null || c.getDescription().isEmpty()) {
+                    insertChoiceStatement.setNull(3, Types.VARCHAR);
+                } else {
+                    insertChoiceStatement.setString(3, c.getDescription());
+                }
+                insertChoiceStatement.setInt(4, c.getNumber());
+                System.out.println(insertChoiceStatement);
+                insertChoiceStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        //delete old choices
+        //insert new choices
     }
 }
