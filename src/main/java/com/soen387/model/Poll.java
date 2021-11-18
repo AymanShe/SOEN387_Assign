@@ -2,18 +2,27 @@ package com.soen387.model;
 
 import com.soen387.business.PollException;
 import com.soen387.business.PollStateException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Hashtable;
 
-public class Poll implements Serializable {
+public class Poll {
 
 	public enum PollStatus {
 		created, 
 		running, 
-		released,
-		closed;
+		released;
 	}
 	private String pollId;
 
@@ -30,16 +39,7 @@ public class Poll implements Serializable {
 	private PollStatus status;
 	private Choice[] choices;
 	private int[] votes;
-	private Date releaseDate;
-	private String createdBy;
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+	private Date releaseTime;
 
 	public Poll() {
 	}
@@ -53,7 +53,7 @@ public class Poll implements Serializable {
 		status = PollStatus.created;
 		choices = _choices;
 		votes = new int[choices.length];
-		releaseDate = null;
+		releaseTime = null;
 	}
 
 	// Deep copy
@@ -66,8 +66,8 @@ public class Poll implements Serializable {
 			choices[i] = new Choice(poll.getChoices()[i]);
 		}
 		votes = poll.getVotes().clone();
-		if (poll.getReleaseDate() != null){
-			releaseDate = new Date(poll.getReleaseDate().getTime());
+		if (poll.getReleaseTime() != null){
+			releaseTime = new Date(poll.getReleaseTime().getTime());
 		}
 	}
 	
@@ -103,8 +103,8 @@ public class Poll implements Serializable {
 		this.votes = votes;
 	}
 
-	public void setReleaseDate(Date releaseDate) {
-		this.releaseDate = releaseDate;
+	public void setReleaseTime(Date releaseTime) {
+		this.releaseTime = releaseTime;
 	}
 
 	public String getName() {
@@ -127,7 +127,7 @@ public class Poll implements Serializable {
 		return votes;
 	}
 
-	public Date getReleaseDate() { return releaseDate; }
+	public Date getReleaseTime() { return releaseTime; }
 
 	public void update(String _name, String _question, Choice[] _choices) throws PollException {
 		if (status != PollStatus.running) {
@@ -154,7 +154,7 @@ public class Poll implements Serializable {
 		
 		if (status == PollStatus.released) {
 			status = PollStatus.created;
-			releaseDate = null;
+			releaseTime = null;
 		}
 	}
 	
@@ -172,7 +172,7 @@ public class Poll implements Serializable {
 		}
 
 		status = PollStatus.released;
-		releaseDate = new Date();
+		releaseTime = new Date();
 	}
 	
 	public void unrelease() throws PollStateException {
@@ -181,7 +181,7 @@ public class Poll implements Serializable {
 		}
 		
 		status = PollStatus.running;
-		releaseDate = null;
+		releaseTime = null;
 	}
 	
 	public Hashtable<Integer, Integer> getResults() throws PollStateException {
@@ -217,5 +217,89 @@ public class Poll implements Serializable {
 		}
 
 		return text;
+	}
+
+	public String toJson() {
+		JSONObject pollJson = new JSONObject();
+		pollJson.put("name", name);
+		pollJson.put("question", question);
+
+		JSONArray choicesJson = new JSONArray();
+		for (int i = 0; i < votes.length; i++) {
+			JSONObject choiceJson = new JSONObject();
+			choiceJson.put("votes", votes[i]);
+			choiceJson.put("choice", choices[i].getText());
+			choiceJson.put("description", choices[i].getDescription());
+
+			choicesJson.add(choiceJson);
+		}
+
+		pollJson.put("choices", choicesJson);
+
+		return pollJson.toString();
+	}
+
+	public String toXML() {
+		Document xml;
+		Element root = null;
+
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			xml = builder.newDocument();
+			Element rootElement = xml.createElement("poll");
+
+			Element nameElement = xml.createElement("name");
+			nameElement.appendChild(xml.createTextNode(name));
+			rootElement.appendChild(nameElement);
+
+			Element questionElement = xml.createElement("question");
+			questionElement.appendChild(xml.createTextNode(question));
+			rootElement.appendChild(questionElement);
+
+			Element choicesElement = xml.createElement("choices");
+
+			for (int i = 0; i < votes.length; i++) {
+				Element choiceElement = xml.createElement("choice");
+
+				Element voteElement = xml.createElement("votes");
+				voteElement.appendChild(xml.createTextNode(Integer.toString(votes[i])));
+				choiceElement.appendChild(voteElement);
+
+				Element choiceNameElement = xml.createElement("choiceName");
+				choiceNameElement.appendChild(xml.createTextNode(choices[i].getText()));
+				choiceElement.appendChild(choiceNameElement);
+
+				Element choiceDescElement = xml.createElement("choiceDesc");
+				choiceDescElement.appendChild(xml.createTextNode(choices[i].getDescription()));
+				choiceElement.appendChild(choiceDescElement);
+
+				choicesElement.appendChild(choiceElement);
+
+			}
+
+			rootElement.appendChild(choicesElement);
+
+			xml.appendChild(rootElement);
+
+			try {
+				StringWriter sw = new StringWriter();
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+				transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+				transformer.transform(new DOMSource(xml), new StreamResult(sw));
+				return sw.toString();
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
+
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 }
