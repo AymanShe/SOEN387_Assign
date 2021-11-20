@@ -2,6 +2,17 @@ package com.soen387.model;
 
 import com.soen387.business.PollException;
 import com.soen387.business.PollStateException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -217,5 +228,89 @@ public class Poll implements Serializable {
 		}
 
 		return text;
+	}
+
+	public String toJson() {
+		JSONObject pollJson = new JSONObject();
+		pollJson.put("name", name);
+		pollJson.put("question", question);
+
+		JSONArray choicesJson = new JSONArray();
+		for (int i = 0; i < votes.length; i++) {
+			JSONObject choiceJson = new JSONObject();
+			choiceJson.put("votes", votes[i]);
+			choiceJson.put("choice", choices[i].getText());
+			choiceJson.put("description", choices[i].getDescription());
+
+			choicesJson.add(choiceJson);
+		}
+
+		pollJson.put("choices", choicesJson);
+
+		return pollJson.toString();
+	}
+
+	public String toXML() {
+		Document xml;
+		Element root = null;
+
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			xml = builder.newDocument();
+			Element rootElement = xml.createElement("poll");
+
+			Element nameElement = xml.createElement("name");
+			nameElement.appendChild(xml.createTextNode(name));
+			rootElement.appendChild(nameElement);
+
+			Element questionElement = xml.createElement("question");
+			questionElement.appendChild(xml.createTextNode(question));
+			rootElement.appendChild(questionElement);
+
+			Element choicesElement = xml.createElement("choices");
+
+			for (int i = 0; i < votes.length; i++) {
+				Element choiceElement = xml.createElement("choice");
+
+				Element voteElement = xml.createElement("votes");
+				voteElement.appendChild(xml.createTextNode(Integer.toString(votes[i])));
+				choiceElement.appendChild(voteElement);
+
+				Element choiceNameElement = xml.createElement("choiceName");
+				choiceNameElement.appendChild(xml.createTextNode(choices[i].getText()));
+				choiceElement.appendChild(choiceNameElement);
+
+				Element choiceDescElement = xml.createElement("choiceDesc");
+				choiceDescElement.appendChild(xml.createTextNode(choices[i].getDescription()));
+				choiceElement.appendChild(choiceDescElement);
+
+				choicesElement.appendChild(choiceElement);
+
+			}
+
+			rootElement.appendChild(choicesElement);
+
+			xml.appendChild(rootElement);
+
+			try {
+				StringWriter sw = new StringWriter();
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+				transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+				transformer.transform(new DOMSource(xml), new StreamResult(sw));
+				return sw.toString();
+			} catch (TransformerException e) {
+				e.printStackTrace();
+			}
+
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 }
