@@ -104,18 +104,31 @@
                         for (Choice choice : ManagedPoll.getChoices()) {
                             String selectedChoice = request.getParameter("choiceNumber");
                             String checked = "";
-                            if(selectedChoice != null && !selectedChoice.isEmpty() && Integer.parseInt(selectedChoice) == choice.getNumber()){
+                            if (selectedChoice != null && !selectedChoice.isEmpty() && Integer.parseInt(selectedChoice) == choice.getNumber()) {
                                 checked = "checked";
                             }
+                            if (ManagedPoll.getStatus() == Poll.PollStatus.running) {
+
                     %>
                     <input type="radio" name="choice" value="<%= choice.getNumber() %>" <%= checked %>>
                     <%= choice.getText()%>(<%=choice.getDescription()%>)<br/>
                     <%
+                    } else {
+                    %>
+                    Choice #<%= choice.getNumber() %>: <%= choice.getText()%>(<%=choice.getDescription()%>)<br/>
+                    <%
+                            }
                         }
                     %>
                 </div>
 
+                <%
+                    if (ManagedPoll.getStatus() == Poll.PollStatus.running) {
+                %>
                 <input type="submit" value="Submit" class="btn btn-primary float-right"/>
+                <%
+                    }
+                %>
             </form>
         </div>
     </div>
@@ -123,15 +136,15 @@
 <%@ include file="sharedViews/footer.html" %>
 
 <!--TODO: re-add chart-->
-    <% if (ManagedPoll.getStatus() == Poll.PollStatus.valueOf("released")) {%>
-    <h2>Poll Google Chart</h2>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+<% if (ManagedPoll.getStatus() == Poll.PollStatus.valueOf("released")) {%>
+<h2>Poll Google Chart</h2>
+<!--Div that will hold the pie chart-->
+<div id="chart_div"></div>
 
-    <%} else {%>
-    <h2>No Google chart as Poll Not Yet Released</h2>
-    <%}%>
-    <br/>
-    <a href="<% out.print(request.getContextPath()); %>">Return to Home Page</a>
+<%} else {%>
+<h2>No Google chart as Poll Not Yet Released</h2>
+<%}%>
+<br/>
+<a href="<% out.print(request.getContextPath()); %>">Return to Home Page</a>
 </body>
 </html>

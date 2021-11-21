@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "com.soen387.controller.VoteServlet", value={"/vote/*", "/Vote/*"})
+@WebServlet(name = "com.soen387.controller.VoteServlet", value = {"/vote/*", "/Vote/*"})
 public class VoteServlet extends HttpServlet {
     PollManager pollManager = new PollManager();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
 
-        if (pathInfo != null && !pathInfo.isEmpty()){
+        if (pathInfo != null && !pathInfo.isEmpty()) {
             //capture the pin id
             String pinId = request.getParameter("pinId");
             //capture the poll id
@@ -45,10 +46,15 @@ public class VoteServlet extends HttpServlet {
         String pathInfo = request.getPathInfo();
 
         //fetch the poll using the PollManager
-        if (pathInfo != null && !pathInfo.isEmpty()){
+        if (pathInfo != null && !pathInfo.isEmpty()) {
             String pollId = pathInfo.substring(1);
             Poll poll = pollManager.getPoll(pollId);
 
+            //only allow voting if the poll is running or released
+            if (poll.getStatus() != Poll.PollStatus.running && poll.getStatus() != Poll.PollStatus.released) {
+                response.sendRedirect(request.getContextPath() + "?error=You cannot access a poll that is not running or released");
+                return;
+            }
 
             //pass the poll as a bean
             request.setAttribute("ManagedPoll", poll);

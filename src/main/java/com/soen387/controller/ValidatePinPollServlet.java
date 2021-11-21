@@ -42,15 +42,9 @@ public class ValidatePinPollServlet extends HttpServlet {
             if (choiceNumber > -1){
                 voteExists = true;
             }
-            //TODO: Search DB if pin & poll combo exists (used hardcore to test)
             if (voteExists) {
-
                 request.setAttribute("choiceNumber", choiceNumber);
                 request.setAttribute("pinId", enteredPinId);
-                //TODO: Do vote with updateVote (use supplied pin)
-
-//                RequestDispatcher dispatcher = request.getRequestDispatcher("/vote/" + enteredPollId);
-//                dispatcher.forward(request, response);
 
                 response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId + "?pinId=" + enteredPinId + "&choiceNumber=" + choiceNumber);
             } else {
@@ -59,10 +53,4 @@ public class ValidatePinPollServlet extends HttpServlet {
             }
         }
     }
-
-    /*
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.ViewsBaseLink + "index.jsp");
-        dispatcher.forward(request, response);
-    }*/
 }
