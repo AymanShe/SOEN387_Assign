@@ -102,13 +102,16 @@
                     <!--TODO: If updateVote, ensure previous DB vote table choice_number checked. getPinId() doesn't exist.-->
                     <%
                         for (Choice choice : ManagedPoll.getChoices()) {
+                            String selectedChoice = request.getParameter("choiceNumber");
+                            String checked = "";
+                            if(selectedChoice != null && !selectedChoice.isEmpty() && Integer.parseInt(selectedChoice) == choice.getNumber()){
+                                checked = "checked";
+                            }
                     %>
-                    <input type="radio" name="choice" value="<%= choice.getNumber() %>"
-                    <%= choice.getNumber() == (Integer.parseInt(request.getParameter("choiceNumber"))) ? "checked" : "" %>>
+                    <input type="radio" name="choice" value="<%= choice.getNumber() %>" <%= checked %>>
                     <%= choice.getText()%>(<%=choice.getDescription()%>)<br/>
                     <%
                         }
-
                     %>
                 </div>
 

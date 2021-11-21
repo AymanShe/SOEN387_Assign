@@ -28,7 +28,7 @@ public class VoteServlet extends HttpServlet {
             //insert the vote into db
             try {
                 //TODO: logic to createVote or updateVote
-                if (pinId == null || pinId == "") {
+                if (pinId == null || pinId.equals("") || pinId.equals("null")) {
                     pollManager.createVote(pollId, choiceNumber);
                 } else {
                     pollManager.updateVote(pinId, pollId, choiceNumber);
