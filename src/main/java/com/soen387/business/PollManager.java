@@ -8,10 +8,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Timer;
+import java.util.*;
 
 public class PollManager implements Serializable {
 
@@ -232,4 +229,44 @@ public class PollManager implements Serializable {
     public List<Poll> getPollsByUserName(String userName) {
 		return pollDao.getPollByUserName(userName);
     }
+
+    public List<String> getAllowedActions(Poll poll){
+		List<String> allowedActions = new ArrayList<>();
+		//based on status
+		switch (poll.getStatus()){
+			case created:
+				allowedActions.add("Run");
+				allowedActions.add("Edit");
+				break;
+			case running:
+				allowedActions.add("Release");
+				allowedActions.add("Edit");
+				break;
+			case released:
+				allowedActions.add("Unrelease");
+				allowedActions.add("Close");
+				break;
+			case closed:
+				break;
+			default:
+				break;
+		}
+
+		//based on votes
+		if(poll.getVotes() == null || poll.getVotes().length == 0){
+			allowedActions.add("Delete");
+		}
+
+		return allowedActions;
+
+	}
+
+	public void editPoll(Poll poll) throws PollException {
+		try {
+			pollDao.editPoll(poll);
+		} catch (SQLException e) {
+			//TODO handle all sql exceptions like this by passing them to a poll exception
+			throw new PollException(e.getMessage());
+		}
+	}
 }

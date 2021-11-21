@@ -6,6 +6,17 @@ public class Choice {
 	private String description;
 	private int number;
 
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Choice() {
+	}
+
 	public int getNumber() {
 		return number;
 	}

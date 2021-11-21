@@ -9,7 +9,6 @@
 <body>
 <%@ include file="sharedViews/navbar.jsp" %>
 <div class="container">
-    <script src="javascript/PollEdit.js"></script>
     <h1>New Poll Form</h1>
     <div class="card">
         <div class="card-body">
@@ -92,5 +91,6 @@
 </div>
 
 <%@ include file="sharedViews/footer.html" %>
+<script src="javascript/PollEdit.js"></script>
 </body>
 </html>
