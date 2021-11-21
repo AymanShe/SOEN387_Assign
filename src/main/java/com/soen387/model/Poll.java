@@ -108,6 +108,7 @@ public class Poll implements Serializable {
 
 	public void setChoices(Choice[] choices) {
 		this.choices = choices;
+		this.votes = new int[choices.length];
 	}
 
 	public void setVotes(int[] votes) {
