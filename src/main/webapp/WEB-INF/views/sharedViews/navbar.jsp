@@ -43,6 +43,7 @@
         } else {
         %>
         <div class="d-flex justify-content-end">
+            <a class="btn btn-secondary" href="<%= request.getContextPath() %>/Signup">Sign Up</a>&#160
             <a class="btn btn-primary" href="<%= request.getContextPath() %>/Login">Login</a>
         </div>
         <%
