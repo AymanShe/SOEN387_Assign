@@ -20,6 +20,20 @@ public abstract class Utility {
         return saltStr;
     }
 
+    public static String generatePinId(){
+        Random rd = new Random();
+        String abc = "0123456789";
+        char character = 0;
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 6) {
+            character = abc.charAt(rd.nextInt(abc.length()));
+            salt.append(character);
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+    }
+
     public static Properties readProperties(String fileName) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream input = classLoader.getResourceAsStream(fileName);

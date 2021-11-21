@@ -7,7 +7,6 @@ import com.soen387.model.Poll;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.time.LocalTime;
 import java.util.*;
 
 public class PollManager implements Serializable {
@@ -195,14 +194,14 @@ public class PollManager implements Serializable {
 		return pollDao.getPoll(pollId);
 	}
 
-	public void realeasePoll(Poll poll) {
+	public void releasePoll(Poll poll) {
 		//TODO check if action is allowed
 		poll.setStatus(Poll.PollStatus.released);
 		poll.setReleaseDate(new Date());
 		pollDao.updatePoll(poll);
 	}
 
-	public void unrealeasePoll(Poll poll) {
+	public void unreleasePoll(Poll poll) {
 		//TODO check if action is allowed
 		poll.setStatus(Poll.PollStatus.running);
 		poll.setReleaseDate(null);
@@ -266,6 +265,14 @@ public class PollManager implements Serializable {
 			pollDao.editPoll(poll);
 		} catch (SQLException e) {
 			//TODO handle all sql exceptions like this by passing them to a poll exception
+			throw new PollException(e.getMessage());
+		}
+	}
+
+	public void insertVote(String pollId, String choiceNumber) throws PollException  {
+		try {
+			pollDao.createVote(pollId, choiceNumber);
+		} catch (SQLException e) {
 			throw new PollException(e.getMessage());
 		}
 	}
