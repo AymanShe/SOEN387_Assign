@@ -34,10 +34,10 @@
                     </div>
                 </div>
 
-                <c:forEach var="choise" items="${ManagedPoll.choices}">
+                <c:forEach var="choice" items="${ManagedPoll.choices}">
                     <div class="form-group card">
                         <div class="card-header">
-                            <label for="choiceName" class="col-form-label">Choice #${choise.number}</label>
+                            <label for="choiceName" class="col-form-label">Choice #${choice.number}</label>
                             <span style="font-size: 1.5rem; color: darkgrey;" class="float-right">
                             <i class="fas fa-trash-alt" onclick="removeChoice(this)"></i>
                         </span>
@@ -45,11 +45,11 @@
                         <div class="form-group row card-body">
                             <label for="choiceName" class="col-lg-1 col-md-3 col-form-label">Text</label>
                             <div class="col-lg-4 col-md-9">
-                                <input id="choiceName" type="text" name="choiceName" class="form-control" placeholder="Enter choice" required value="${choise.text}">
+                                <input id="choiceName" type="text" name="choiceName" class="form-control" placeholder="Enter choice" required value="${choice.text}">
                             </div>
                             <label for="choiceDesc" class="col-lg-2 col-md-3 col-form-label">Description</label>
                             <div class="col-lg-5 col-md-9">
-                                <input id="choiceDesc" type="text" name="choiceDesc" class="form-control" placeholder="Enter Description (optional)" value="${choise.description}">
+                                <input id="choiceDesc" type="text" name="choiceDesc" class="form-control" placeholder="Enter Description (optional)" value="${choice.description}">
                             </div>
                         </div>
                     </div>

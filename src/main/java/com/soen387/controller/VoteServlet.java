@@ -13,27 +13,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "com.soen387.controller.VoteServlet")
+@WebServlet(name = "com.soen387.controller.VoteServlet", value={"/vote/*", "/Vote/*"})
 public class VoteServlet extends HttpServlet {
+    PollManager pollManager = new PollManager();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //get the poll manager
-        PollManager pollManager = (PollManager)getServletContext().getAttribute("poll");
+        String pathInfo = request.getPathInfo();
 
-        //get the vote attribute
-        //get choice
-        String voteValue = request.getParameter("choice");
-        int voteValueAsInt = Integer.parseInt(voteValue);
-        //get session id
-        String sessionId = request.getRequestedSessionId();
-        //record the vote
-        try {
-            pollManager.vote(sessionId, voteValueAsInt);
-            //return
-            request.getRequestDispatcher(Constants.ViewsBaseLink + "vote.jsp").forward(request, response);
-        } catch (PollException e) {
-            request.setAttribute("error", e);
-            System.out.println(e);
-            request.getRequestDispatcher(Constants.ViewsBaseLink + "error.jsp").forward(request, response);
+        if (pathInfo != null && !pathInfo.isEmpty()){
+            //capture the poll id
+            String pollId = pathInfo.substring(1);
+
+
+            //capture the choice
+            String choiceNumber = request.getParameter("choice");
+
+            //insert the vote into db
+            try {
+                pollManager.insertVote(pollId, choiceNumber);
+            } catch (PollException e) {
+                e.printStackTrace();
+            }
+            //TODO: redirect
+
         }
     }
 

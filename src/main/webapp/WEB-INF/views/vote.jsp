@@ -6,14 +6,16 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
-<jsp:useBean id='poll' class='com.soen387.business.PollManager' scope="application"/>
+<jsp:useBean id="ManagedPoll" class="com.soen387.model.Poll" scope="request"/>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Polling System - Poll Vote Page</title>
 
 
-    <% if (poll.getPoll().getStatus() == Poll.PollStatus.valueOf("released")) {%>
+    <% if (ManagedPoll.getStatus() == Poll.PollStatus.valueOf("released")) {%>
 
     <!--Code taken from: https://developers.google.com/chart/interactive/docs/quick_start-->
     <!--Load the AJAX API-->
@@ -110,10 +112,10 @@
 <%--    <!--Div that will hold the pie chart-->--%>
 <%--    <div id="chart_div"></div>--%>
 
-    <%} else {%>
-    <h2>No Google chart as Poll Not Yet Released</h2>
-    <%}%>
-    <br/>
-    <a href="<% out.print(request.getContextPath()); %>">Return to Home Page</a>
+<%--    <%} else {%>--%>
+<%--    <h2>No Google chart as Poll Not Yet Released</h2>--%>
+<%--    <%}%>--%>
+<%--    <br/>--%>
+<%--    <a href="<% out.print(request.getContextPath()); %>">Return to Home Page</a>--%>
 </body>
 </html>

@@ -268,4 +268,12 @@ public class PollManager implements Serializable {
 			throw new PollException(e.getMessage());
 		}
 	}
+
+	public void insertVote(String pollId, String choiceNumber) throws PollException  {
+		try {
+			pollDao.createVote(pollId, choiceNumber);
+		} catch (SQLException e) {
+			throw new PollException(e.getMessage());
+		}
+	}
 }
