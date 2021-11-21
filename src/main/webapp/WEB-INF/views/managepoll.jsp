@@ -32,6 +32,12 @@ Release date: <%= ManagedPoll.getReleaseDate() %> <br/>
 <%
     }
 %>
+<button onclick='window.location = "<%= request.getContextPath() %>/Download?pollid=<%= ManagedPoll.getPollId() %>&format=" + document.getElementById("format").value;'>Download Poll</button>
+<select name="format" id="format">Download File Format:
+    <option value="txt">txt</option>
+    <option value="xml">xml</option>
+    <option value="json">json</option>
+</select>
 
 <%@ include file="sharedViews/footer.html" %>
 </body>
