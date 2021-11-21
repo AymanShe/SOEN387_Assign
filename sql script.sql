@@ -23,7 +23,7 @@ CREATE TABLE `soen387`.`choice` (
 
 
 CREATE TABLE `soen387`.`vote` (
-  `vote_id` varchar(6) NOT NULL COMMENT 'PIN',
+  `vote_id` varchar(6) NOT NULL AUTO_INCREMENT COMMENT 'PIN',
   `poll_id` varchar(10) NOT NULL,
   `choice_number` int NOT NULL,
   `create_date` date NOT NULL,
