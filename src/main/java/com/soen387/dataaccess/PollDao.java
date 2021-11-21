@@ -283,14 +283,14 @@ public class PollDao {
 
     public void updateVote(int pinId, String pollId, int choiceNumber) throws SQLException  {
         //TODO: need to pre-validate if pin_id & poll_id exist (will do when load vote results to update)
-        String updateVoteQuery = "UPDATE vote SET choice_number = ? AND create_timestamp = ?  WHERE pin_id = ? AND poll_id = ?";
+        String updateVoteQuery = "UPDATE vote SET choice_number = ?, create_timestamp = ?  WHERE pin_id = ? AND poll_id = ?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement updateVoteStatement = connection.prepareStatement(updateVoteQuery)) {
 
-            updateVoteStatement.setString(1, pinId);
-            updateVoteStatement.setString(2, pollId);
-            updateVoteStatement.setString(3, choiceNumber);
-            updateVoteStatement.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
+            updateVoteStatement.setInt(1, choiceNumber);
+            updateVoteStatement.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
+            updateVoteStatement.setInt(3, pinId);
+            updateVoteStatement.setString(4, pollId);
 
             int updatePollResult = updateVoteStatement.executeUpdate(); //TODO use returned pinId (this int returns # rows affected)
         } catch (SQLException e) {

@@ -21,13 +21,10 @@ public class VoteServlet extends HttpServlet {
         if (pathInfo != null && !pathInfo.isEmpty()){
             //capture the pin id
             String pinId = request.getParameter("pinId");
-
             //capture the poll id
             String pollId = pathInfo.substring(1);
-
             //capture the choice
             String choiceNumber = request.getParameter("choice");
-
             //insert the vote into db
             try {
                 //TODO: logic to createVote or updateVote
@@ -52,8 +49,16 @@ public class VoteServlet extends HttpServlet {
             String pollId = pathInfo.substring(1);
             Poll poll = pollManager.getPoll(pollId);
 
+
             //pass the poll as a bean
             request.setAttribute("ManagedPoll", poll);
+
+            String choiceNumber = request.getParameter("choiceNumber");
+            String pinId = request.getParameter("pinId");
+            if (pinId != null && !pinId.isEmpty()) {
+                request.setAttribute("choiceNumber", choiceNumber);
+                request.setAttribute("pinId", pinId);
+            }
 
             //forward to the view page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/" + Constants.ViewsBaseLink + "vote.jsp");

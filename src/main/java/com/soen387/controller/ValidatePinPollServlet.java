@@ -1,6 +1,8 @@
 package com.soen387.controller;
 
 
+import com.soen387.business.PollManager;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "ValidatePinPollServlet", value = {"/ValidatePinPoll", "/validatepinpoll"})
 public class ValidatePinPollServlet extends HttpServlet {
+    PollManager pollManager = new PollManager();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String enteredPinId = request.getParameter("pinId");
@@ -34,11 +37,22 @@ public class ValidatePinPollServlet extends HttpServlet {
                 throw new IOException();
             }
         } else {
+            int choiceNumber = pollManager.getChoiceNumber(enteredPinId, enteredPollId);
+            boolean voteExists = false;
+            if (choiceNumber > -1){
+                voteExists = true;
+            }
             //TODO: Search DB if pin & poll combo exists (used hardcore to test)
-            boolean voteExists = true;
             if (voteExists) {
+
+                request.setAttribute("choiceNumber", choiceNumber);
+                request.setAttribute("pinId", enteredPinId);
                 //TODO: Do vote with updateVote (use supplied pin)
-                response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId);
+
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("/vote/" + enteredPollId);
+//                dispatcher.forward(request, response);
+
+                response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId + "?pinId=" + enteredPinId + "&choiceNumber=" + choiceNumber);
             } else {
                 //TODO: Handle invalid Pin & Poll entry
                 throw new IOException();

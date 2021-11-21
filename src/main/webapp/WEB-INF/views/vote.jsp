@@ -25,7 +25,7 @@
     <script type="text/javascript">
 
         // Load the Visualization API and the corechart package.
-        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages': ['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
         google.charts.setOnLoadCallback(drawChart);
@@ -60,9 +60,11 @@
             ]);
 
             // Set chart options
-            var options = {'title':'Choices in the Poll',
-                'width':400,
-                'height':300};
+            var options = {
+                'title': 'Choices in the Poll',
+                'width': 400,
+                'height': 300
+            };
 
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -82,6 +84,7 @@
         <div class="card-body">
             <form action="<%= request.getContextPath() %>/vote/<%=ManagedPoll.getPollId()%>" method="post">
                 <input type="hidden" name="poll_id" value="<%=ManagedPoll.getPollId()%>">
+                <input type="hidden" name="pinId" value="<%=request.getParameter("pinId")%>">
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label">Poll Title</label>
                     <div class="col-md-8">
@@ -97,11 +100,21 @@
 
                 <div>
                     <!--TODO: If updateVote, ensure previous DB vote table choice_number checked. getPinId() doesn't exist.-->
-                    <c:forEach var="choice" items="${ManagedPoll.choices}">
-                        <input type="radio" name="choice" value="${choice.number}"
-                            ${choice.number == poll.getChoiceNumber(ManagedPoll.getPinId(), ManagedPoll.getPollId())
-                            ? 'checked' : ''}>${choice.text}(${choice.description})<br/>
-                    </c:forEach>
+                    <%
+                        for (Choice choice : ManagedPoll.getChoices()) {
+                    %>
+                    <input type="radio" name="choice" value="<%= choice.getNumber() %>"
+                    <%= choice.getNumber() == Integer.parseInt(request.getParameter("choiceNumber")) ? "checked" : "" %>>
+                    <%= choice.getText()%>(<%=choice.getDescription()%>)<br/>
+                    <%
+                        }
+
+                    %>
+<%--                    <c:forEach var="choice" items="${ManagedPoll.choices}">--%>
+<%--                        <input type="radio" name="choice" value="${choice.number}"--%>
+<%--                            ${choice.number == poll.getChoiceNumber(ManagedPoll.getPinId(), ManagedPoll.getPollId())--%>
+<%--                                    ? 'checked' : ''}>${choice.text}(${choice.description})<br/>--%>
+<%--                    </c:forEach>--%>
                 </div>
 
                 <input type="submit" value="Submit" class="btn btn-primary float-right"/>
