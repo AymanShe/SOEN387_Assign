@@ -23,7 +23,7 @@ CREATE TABLE `soen387`.`choice` (
 
 
 CREATE TABLE `soen387`.`vote` (
-  `pin_id` varchar(6) NOT NULL,
+  `pin_id` int NOT NULL,
   `poll_id` varchar(10) NOT NULL,
   `choice_number` int NOT NULL,
   `create_timestamp` timestamp NOT NULL,

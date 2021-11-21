@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/Vote">Vote <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>">Vote <span class="sr-only">(current)</span></a>
                 </li>
                 <%
                     if (SessionManager.isUserAuthenticated(request.getSession())) {
@@ -37,7 +37,7 @@
         %>
         <span class="navbar-text">Welcome <%= SessionManager.getAuthenticatedUserName(request.getSession()) %></span>
         <div class="d-flex justify-content-end">
-            <a class="btn btn-secondary" href="<%= request.getContextPath() %>/Logout">Logout</a>
+            &#160<a class="btn btn-secondary" href="<%= request.getContextPath() %>/Logout">Logout</a>
         </div>
         <%
         } else {

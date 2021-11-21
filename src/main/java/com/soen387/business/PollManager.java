@@ -269,9 +269,21 @@ public class PollManager implements Serializable {
 		}
 	}
 
-	public void insertVote(String pollId, String choiceNumber) throws PollException  {
+	public int getChoiceNumber(String pinId, String pollId) {
+		return pollDao.getChoiceNumber(pinId, pollId);
+	}
+
+	public void createVote(String pollId, String choiceNumber) throws PollException  {
 		try {
 			pollDao.createVote(pollId, choiceNumber);
+		} catch (SQLException e) {
+			throw new PollException(e.getMessage());
+		}
+	}
+
+	public void updateVote(String pinId, String pollId, String choiceNumber) throws PollException  {
+		try {
+			pollDao.updateVote(Integer.parseInt(pinId), pollId, Integer.parseInt(choiceNumber));
 		} catch (SQLException e) {
 			throw new PollException(e.getMessage());
 		}

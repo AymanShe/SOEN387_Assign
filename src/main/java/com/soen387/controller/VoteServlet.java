@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "com.soen387.controller.VoteServlet", value={"/vote/*", "/Vote/*"})
 public class VoteServlet extends HttpServlet {
@@ -20,21 +19,25 @@ public class VoteServlet extends HttpServlet {
         String pathInfo = request.getPathInfo();
 
         if (pathInfo != null && !pathInfo.isEmpty()){
+            //capture the pin id
+            String pinId = request.getParameter("pinId");
             //capture the poll id
             String pollId = pathInfo.substring(1);
-
-
             //capture the choice
             String choiceNumber = request.getParameter("choice");
-
             //insert the vote into db
             try {
-                pollManager.insertVote(pollId, choiceNumber);
+                //TODO: logic to createVote or updateVote
+                if (pinId == "") {
+                    pollManager.createVote(pollId, choiceNumber);
+                } else {
+                    pollManager.updateVote(pinId, pollId, choiceNumber);
+                }
             } catch (PollException e) {
                 e.printStackTrace();
             }
-            //TODO: redirect
 
+            response.sendRedirect(request.getContextPath());
         }
     }
 
@@ -46,8 +49,16 @@ public class VoteServlet extends HttpServlet {
             String pollId = pathInfo.substring(1);
             Poll poll = pollManager.getPoll(pollId);
 
+
             //pass the poll as a bean
             request.setAttribute("ManagedPoll", poll);
+
+            String choiceNumber = request.getParameter("choiceNumber");
+            String pinId = request.getParameter("pinId");
+            if (pinId != null && !pinId.isEmpty()) {
+                request.setAttribute("choiceNumber", choiceNumber);
+                request.setAttribute("pinId", pinId);
+            }
 
             //forward to the view page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/" + Constants.ViewsBaseLink + "vote.jsp");
