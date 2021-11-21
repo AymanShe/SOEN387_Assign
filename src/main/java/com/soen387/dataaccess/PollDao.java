@@ -71,9 +71,11 @@ public class PollDao {
         String getPollQuery = "SELECT * FROM poll WHERE poll_id = ?";
         //TODO recomended to make all query use named parameter
         String getChoicesQuery = "SELECT * FROM choice WHERE poll_id = ?";
+        String getVotesQuery = "SELECT * FROM vote WHERE poll_id = ?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement getPollStatement = connection.prepareStatement(getPollQuery);
-             PreparedStatement getChoicesStatement = connection.prepareStatement(getChoicesQuery)) {
+             PreparedStatement getChoicesStatement = connection.prepareStatement(getChoicesQuery);
+             PreparedStatement getVotesStatement = connection.prepareStatement(getVotesQuery)) {
 
             getPollStatement.setString(1, pollId);
 
@@ -98,6 +100,17 @@ public class PollDao {
             }
             Choice[] choices = choicesAsList.toArray(new Choice[choicesAsList.size()]);
             poll.setChoices(choices);
+
+            getVotesStatement.setString(1, pollId);
+            ResultSet voteResult = getVotesStatement.executeQuery();
+            List<Integer> votesAsList = new ArrayList();
+            while (voteResult.next()) {
+                int choiceNumber = voteResult.getInt("choice_number");
+                votesAsList.add(choiceNumber);
+            }
+            int[] votes = votesAsList.stream().mapToInt(i->i).toArray();
+            poll.setVotes(votes);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

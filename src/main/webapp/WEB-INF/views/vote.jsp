@@ -104,7 +104,7 @@
                         for (Choice choice : ManagedPoll.getChoices()) {
                     %>
                     <input type="radio" name="choice" value="<%= choice.getNumber() %>"
-                    <%= choice.getNumber() == Integer.parseInt(request.getParameter("choiceNumber")) ? "checked" : "" %>>
+                    <%= choice.getNumber() == (Integer.parseInt(request.getParameter("choiceNumber"))) ? "checked" : "" %>>
                     <%= choice.getText()%>(<%=choice.getDescription()%>)<br/>
                     <%
                         }

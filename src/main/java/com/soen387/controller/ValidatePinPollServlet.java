@@ -55,7 +55,7 @@ public class ValidatePinPollServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId + "?pinId=" + enteredPinId + "&choiceNumber=" + choiceNumber);
             } else {
                 //TODO: Handle invalid Pin & Poll entry
-                throw new IOException();
+                response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId);
             }
         }
     }
