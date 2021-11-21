@@ -2,7 +2,9 @@ package com.soen387.controller;
 
 import com.soen387.business.PollException;
 import com.soen387.business.PollManager;
+import com.soen387.model.Poll;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +38,24 @@ public class VoteServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(Constants.ViewsBaseLink + "vote.jsp").forward(request, response);
+        String pathInfo = request.getPathInfo();
+
+        //fetch the poll using the PollManager
+        if (pathInfo != null && !pathInfo.isEmpty()){
+            String pollId = pathInfo.substring(1);
+            Poll poll = pollManager.getPoll(pollId);
+
+            //pass the poll as a bean
+            request.setAttribute("ManagedPoll", poll);
+
+            //forward to the view page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/" + Constants.ViewsBaseLink + "vote.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            //TODO return a better feedback message
+            response.sendRedirect(request.getContextPath());
+        }
+
+
     }
 }

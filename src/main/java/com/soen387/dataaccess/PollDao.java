@@ -144,6 +144,8 @@ public class PollDao {
 
             //TODO handle when 0 rows effected
 
+            //TODO deleteVotes when deletePoll
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

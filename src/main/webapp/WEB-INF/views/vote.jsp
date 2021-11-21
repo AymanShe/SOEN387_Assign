@@ -1,7 +1,9 @@
 <%@ page import="com.soen387.model.Poll" %>
 <%@ page import="com.soen387.model.Choice" %>
 <%@ page import="java.util.Hashtable" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.soen387.business.PollStateException" %>
+<%@ page import="com.soen387.business.PollException" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <jsp:useBean id='poll' class='com.soen387.business.PollManager' scope="application"/>
@@ -36,14 +38,18 @@
 
             data.addRows([
                 <%
-                    Choice choices[] = poll.getPoll().getChoices();
-                    Hashtable<Integer, Integer> results = poll.getPollResult();
+                    Choice[] choices = ManagedPoll.getChoices();
+                    try {
+                        Hashtable<Integer, Integer> results = ManagedPoll.getResults();
 
-                    for (int i = 0; i < choices.length; i++) {
-                        if (i != 0) out.print("                ");
-                        out.print("['" + choices[i].getText() + "', " + results.get(i) + "]");
-                        if (i != choices.length - 1) out.print(",");
-                        else out.println("");
+                        for (int i = 0; i < choices.length; i++) {
+                            if (i != 0) out.print("                ");
+                            out.print("['" + choices[i].getText() + "', " + results.get(i) + "]");
+                            if (i != choices.length - 1) out.print(",");
+                            else out.println("");
+                        }
+                    } catch (PollException e) {
+                        e.printStackTrace();
                     }
 
                 %>
@@ -65,31 +71,44 @@
 
 <body class="container">
 
-    <br/>
-    <h1>Poll</h1>
+<%@ include file="sharedViews/navbar.jsp" %>
+<div class="container">
+    <h1>Vote on Poll</h1>
+    <div class="card">
+        <div class="card-body">
+            <form action="<%= request.getContextPath() %>/vote/<%=ManagedPoll.getPollId()%>" method="post">
+                <input type="hidden" name="poll_id" value="<%=ManagedPoll.getPollId()%>">
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Poll Title</label>
+                    <div class="col-md-8">
+                        <%= ManagedPoll.getName() %>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Poll Question</label>
+                    <div class="col-md-8">
+                        <%= ManagedPoll.getQuestion() %>
+                    </div>
+                </div>
 
-    <br/>
-    <% if (poll.getPoll().getStatus() == Poll.PollStatus.valueOf("running")) {%>
-    <h2>Poll: <%= poll.getPoll().getQuestion() %></h2>
-    <form action="Vote" method="post" class="mb-3">
-        <%
-            Choice[] choices = poll.getPoll().getChoices();
-            for(int i = 0; i< choices.length; i++){ %>
-        <input type="radio" name="choice" value="<%= i %>"><%= choices[i].getText() %>(<%= choices[i].getDescription() %>) <br/>
-        <% }%>
-        <br/>
-        <input type="submit" value="Submit" class="btn-primary">
-    </form>
-    <%} else {%>
-    <h2>Poll is Not Currently Running</h2>
-    <%}%>
+                <div>
+                    <c:forEach var="choice" items="${ManagedPoll.choices}">
+                        <input type="radio" name="choice" value="${choice.number}">${choice.text}(${choice.description})<br/>
+                    </c:forEach>
+                </div>
 
-    <hr>
+                <input type="submit" value="Submit" class="btn btn-primary float-right"/>
+            </form>
+        </div>
+    </div>
+</div>
+<%@ include file="sharedViews/footer.html" %>
 
-    <% if (poll.getPoll().getStatus() == Poll.PollStatus.valueOf("released")) {%>
-    <h2>Poll Google Chart</h2>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+<!--TODO: re-add chart-->
+<%--    <% if (ManagedPoll.getPoll().getStatus() == Poll.PollStatus.valueOf("released")) {%>--%>
+<%--    <h2>Poll Google Chart</h2>--%>
+<%--    <!--Div that will hold the pie chart-->--%>
+<%--    <div id="chart_div"></div>--%>
 
     <%} else {%>
     <h2>No Google chart as Poll Not Yet Released</h2>

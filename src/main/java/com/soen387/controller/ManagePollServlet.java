@@ -27,10 +27,10 @@ public class ManagePollServlet extends HttpServlet {
                 pollManager.runPoll(poll);
                 break;
             case "release":
-                pollManager.realeasePoll(poll);
+                pollManager.releasePoll(poll);
                 break;
             case "unrelease":
-                pollManager.unrealeasePoll(poll);
+                pollManager.unreleasePoll(poll);
                 break;
             case "close":
                 pollManager.closePoll(poll);
