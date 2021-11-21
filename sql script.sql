@@ -23,12 +23,11 @@ CREATE TABLE `soen387`.`choice` (
 
 
 CREATE TABLE `soen387`.`vote` (
-  `vote_id` varchar(6) NOT NULL COMMENT 'PIN',
+  `pin_id` varchar(6) NOT NULL,
   `poll_id` varchar(10) NOT NULL,
   `choice_number` int NOT NULL,
-  `create_date` date NOT NULL,
-  `create_time` time NOT NULL,
-  PRIMARY KEY (`vote_id`,`poll_id`)
+  `create_timestamp' timestamp NOT NULL,
+  PRIMARY KEY (`pin_id`,`poll_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
