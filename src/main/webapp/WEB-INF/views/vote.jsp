@@ -1,4 +1,5 @@
 <%@ page import="com.soen387.model.Poll" %>
+<%@ page import="com.soen387.business.PollManager" %>
 <%@ page import="com.soen387.model.Choice" %>
 <%@ page import="java.util.Hashtable" %>
 <%@ page import="com.soen387.business.PollStateException" %>
@@ -7,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <jsp:useBean id="ManagedPoll" class="com.soen387.model.Poll" scope="request"/>
+<jsp:useBean id="poll" class="com.soen387.business.PollManager" scope="request"/>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
@@ -94,8 +96,11 @@
                 </div>
 
                 <div>
+                    <!--TODO: If updateVote, ensure previous DB vote table choice_number checked. getPinId() doesn't exist.-->
                     <c:forEach var="choice" items="${ManagedPoll.choices}">
-                        <input type="radio" name="choice" value="${choice.number}">${choice.text}(${choice.description})<br/>
+                        <input type="radio" name="choice" value="${choice.number}"
+                            ${choice.number == poll.getChoiceNumber(ManagedPoll.getPinId(), ManagedPoll.getPollId())
+                            ? 'checked' : ''}>${choice.text}(${choice.description})<br/>
                     </c:forEach>
                 </div>
 

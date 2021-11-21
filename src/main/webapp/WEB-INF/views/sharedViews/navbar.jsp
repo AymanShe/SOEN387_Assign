@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/Vote">Vote <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>">Vote <span class="sr-only">(current)</span></a>
                 </li>
                 <%
                     if (SessionManager.isUserAuthenticated(request.getSession())) {

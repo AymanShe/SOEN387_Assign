@@ -100,9 +100,9 @@ public class PollDao {
             poll.setChoices(choices);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            return poll == null ? null : poll;
         }
+
+         return poll;
     }
 
     public void updatePoll(Poll poll) {
@@ -145,7 +145,7 @@ public class PollDao {
             deletePollStatement.setString(1, poll.getPollId());
             int pollRowsEffected = deletePollStatement.executeUpdate();
 
-            //TODO handle when 0 rows effected
+            //TODO handle when 0 rows affected
 
             //TODO deleteVotes when deletePoll
 
@@ -175,9 +175,9 @@ public class PollDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            return polls;
         }
+
+        return polls;
     }
 
     public void editPoll(Poll poll) throws SQLException {
@@ -217,6 +217,31 @@ public class PollDao {
         }
     }
 
+    //TODO: Fix to properly retrieve vote for updateVote
+    public int getChoiceNumber(String pinId, String pollId) {
+        String getVoteQuery = "SELECT choice_number FROM vote WHERE pin_id = ? AND poll_id = ?";
+        int choiceNumber = -1;
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement getVoteStatement = connection.prepareStatement(getVoteQuery)) {
+
+            getVoteStatement.setString(1, pinId);
+            getVoteStatement.setString(2, pollId);
+
+            ResultSet voteResult = getVoteStatement.executeQuery();
+
+            //TODO: Ensure casts from String to Int properly
+            choiceNumber = Integer.parseInt(voteResult.getString("choice_number"));
+            //Timestamp timestamp = voteResult.getTimestamp("release_timestamp");
+
+            return choiceNumber;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return choiceNumber;
+    }
+
     public void createVote(String pollId, String choiceNumber) throws SQLException  {
         String createVoteQuery = "INSERT INTO vote (pin_id, poll_id, choice_number, create_timestamp) values(?, ?, ?, ?)";
         String checkVoteQuery = "SELECT * FROM vote WHERE poll_id = ? AND pin_id = ?";
@@ -244,7 +269,22 @@ public class PollDao {
         } catch (SQLException e) {
             throw e;
         }
+    }
 
-        //TODO: updateVote()
+    public void updateVote(String pinId, String pollId, String choiceNumber) throws SQLException  {
+        //TODO: need to pre-validate if pin_id & poll_id exist (will do when load vote results to update)
+        String updateVoteQuery = "UPDATE vote SET choice_number = ? AND create_timestamp = ?  WHERE pin_id = ? AND poll_id = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement updateVoteStatement = connection.prepareStatement(updateVoteQuery)) {
+
+            updateVoteStatement.setString(1, pinId);
+            updateVoteStatement.setString(2, pollId);
+            updateVoteStatement.setString(3, choiceNumber);
+            updateVoteStatement.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
+
+            int updatePollResult = updateVoteStatement.executeUpdate(); //TODO use returned pinId (this int returns # rows affected)
+        } catch (SQLException e) {
+            throw e;
+        }
     }
 }

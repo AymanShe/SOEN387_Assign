@@ -27,6 +27,14 @@
         <servlet-name>DownloadPollServlet</servlet-name>
         <url-pattern>/download-poll</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ValidatePinPollServlet</servlet-name>
+        <servlet-class>com.soen387.controller.ValidatePinPollServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ValidatePinPollServlet</servlet-name>
+        <url-pattern>/ValidatePinPollServlet</url-pattern>
+    </servlet-mapping>
 
 
 
