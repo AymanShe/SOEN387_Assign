@@ -37,7 +37,7 @@
         %>
         <span class="navbar-text">Welcome <%= SessionManager.getAuthenticatedUserName(request.getSession()) %></span>
         <div class="d-flex justify-content-end">
-            <a class="btn btn-secondary" href="<%= request.getContextPath() %>/Logout">Logout</a>
+            &#160<a class="btn btn-secondary" href="<%= request.getContextPath() %>/Logout">Logout</a>
         </div>
         <%
         } else {
