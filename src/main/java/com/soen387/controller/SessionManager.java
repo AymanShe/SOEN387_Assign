@@ -32,4 +32,17 @@ public abstract class SessionManager {
         session.removeAttribute("ManagerAccess");
         session.removeAttribute("UserID");
     }
+
+    public static void SetPinPollId(HttpSession session, String pollId, String pinId) {
+        session.setAttribute("PollId", pollId);
+        session.setAttribute("PinId", pinId);
+    }
+
+    public static boolean ValidatePinPollId(HttpSession session, String pollId, String pinId) {
+        if (session.getAttribute("PollId") != pollId || session.getAttribute("PinId") != pinId) {
+            return false;
+        }
+
+        return true;
+    }
 }
