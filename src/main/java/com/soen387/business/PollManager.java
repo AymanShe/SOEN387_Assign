@@ -172,7 +172,7 @@ public class PollManager implements Serializable {
 		return actions;
 	}
 
-	public String downloadPollDetails(PrintWriter output, StringBuilder fileName) throws PollException {
+	public String downloadPollDetails(PrintWriter output, StringBuilder fileName, Poll poll, String format) throws PollException {
         if (poll == null) {
             throw new PollNotFoundException("Cannot download the poll results when none exists.");
         }
@@ -181,11 +181,19 @@ public class PollManager implements Serializable {
             throw new PollStateException("Cannot download the poll results while the Poll is not in the released state.");
         }
 
-		String name = poll.getName() + "-" + poll.getReleaseDate().toString() + ".txt";
+		String content = "";
+		if (format.equalsIgnoreCase("json")) content = poll.toJson();
+		else if (format.equalsIgnoreCase("xml")) content = poll.toXML();
+		else {
+			format = "txt";
+			content = poll.toString();
+		}
+
+		String name = poll.getName() + "-" + poll.getReleaseDate().toString() + "." + format;
 		fileName.delete(0, fileName.length());
 		fileName.append(name);
 
-		output.print(poll.toString());
+		output.print(content);
 
 		return name;
 	}

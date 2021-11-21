@@ -16,7 +16,7 @@ public class DownloadServlet extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PollManager pollManager = (PollManager)getServletContext().getAttribute("poll");
         response.setDateHeader("Expires", 0);
         PrintWriter out = response.getWriter();
@@ -30,5 +30,5 @@ public class DownloadServlet extends HttpServlet {
             request.getRequestDispatcher(Constants.ViewsBaseLink + "error.jsp").forward(request, response);
             return;
         }
-    }
+    }*/
 }
