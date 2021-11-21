@@ -230,9 +230,12 @@ public class PollDao {
 
             ResultSet voteResult = getVoteStatement.executeQuery();
 
-            //TODO: Ensure casts from String to Int properly
-            choiceNumber = Integer.parseInt(voteResult.getString("choice_number"));
-            //Timestamp timestamp = voteResult.getTimestamp("release_timestamp");
+            if (voteResult.next()){
+                choiceNumber = voteResult.getInt("choice_number");
+
+                //TODO: May need timestamp later
+                //Timestamp timestamp = voteResult.getTimestamp("release_timestamp");
+            }
 
             return choiceNumber;
         } catch (SQLException e) {
@@ -242,36 +245,43 @@ public class PollDao {
         return choiceNumber;
     }
 
-    public void createVote(String pollId, String choiceNumber) throws SQLException  {
+    public int createVote(String pollId, String choiceNumber) throws SQLException  {
         String createVoteQuery = "INSERT INTO vote (pin_id, poll_id, choice_number, create_timestamp) values(?, ?, ?, ?)";
         String checkVoteQuery = "SELECT * FROM vote WHERE poll_id = ? AND pin_id = ?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement createVoteStatement = connection.prepareStatement(createVoteQuery);
              PreparedStatement checkVoteStatement = connection.prepareStatement(checkVoteQuery)) {
 
-            String pinId = Utility.generatePinId();
+            int pinId = Utility.generatePinId();
             //check if the Poll Id is already used
             checkVoteStatement.setString(1, pollId);
-            checkVoteStatement.setString(2, pinId);
+            checkVoteStatement.setInt(2, pinId);
             ResultSet checkResult = checkVoteStatement.executeQuery();
             while (checkResult.next()) {//TODO potential infinite loop
                 pinId = Utility.generatePinId();
-                checkVoteStatement.setString(2, pinId);
+                checkVoteStatement.setInt(2, pinId);
                 checkResult = checkVoteStatement.executeQuery();
             }
 
-            createVoteStatement.setString(1, pinId);
+            createVoteStatement.setInt(1, pinId);
             createVoteStatement.setString(2, pollId);
             createVoteStatement.setString(3, choiceNumber);
             createVoteStatement.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
 
             int updatePollResult = createVoteStatement.executeUpdate(); //TODO use returned pinId
+
+            if (updatePollResult != 0) {
+                return pinId;
+            }
+            else {
+                return 0;
+            }
         } catch (SQLException e) {
             throw e;
         }
     }
 
-    public void updateVote(String pinId, String pollId, String choiceNumber) throws SQLException  {
+    public void updateVote(int pinId, String pollId, int choiceNumber) throws SQLException  {
         //TODO: need to pre-validate if pin_id & poll_id exist (will do when load vote results to update)
         String updateVoteQuery = "UPDATE vote SET choice_number = ? AND create_timestamp = ?  WHERE pin_id = ? AND poll_id = ?";
         try (Connection connection = DBConnection.getConnection();

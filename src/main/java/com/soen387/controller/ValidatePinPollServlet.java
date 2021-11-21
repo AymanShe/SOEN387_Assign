@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ValidatePinServlet", value = {"/ValidatePinPoll", "/validatepinpoll"})
+@WebServlet(name = "ValidatePinPollServlet", value = {"/ValidatePinPoll", "/validatepinpoll"})
 public class ValidatePinPollServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -46,9 +46,9 @@ public class ValidatePinPollServlet extends HttpServlet {
         }
     }
 
-    //TODO: Not properly implemented
+    /*
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.ViewsBaseLink + "index.jsp");
         dispatcher.forward(request, response);
-    }
+    }*/
 }

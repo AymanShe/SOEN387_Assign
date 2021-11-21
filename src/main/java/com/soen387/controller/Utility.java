@@ -20,7 +20,7 @@ public abstract class Utility {
         return saltStr;
     }
 
-    public static String generatePinId(){
+    public static int generatePinId(){
         Random rd = new Random();
         String abc = "0123456789";
         char character = 0;
@@ -30,7 +30,7 @@ public abstract class Utility {
             character = abc.charAt(rd.nextInt(abc.length()));
             salt.append(character);
         }
-        String saltStr = salt.toString();
+        int saltStr = Integer.parseInt(salt.toString());
         return saltStr;
     }
 
