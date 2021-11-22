@@ -67,6 +67,7 @@ public class PollDao {
 
     public Poll getPoll(String pollId) {
         Poll poll = new Poll();
+        pollId = pollId.toUpperCase();
 
         String getPollQuery = "SELECT * FROM poll WHERE poll_id = ?";
         //TODO recomended to make all query use named parameter
@@ -242,6 +243,7 @@ public class PollDao {
 
     //TODO: Fix to properly retrieve vote for updateVote
     public int getChoiceNumber(String pinId, String pollId) {
+        pollId = pollId.toUpperCase();
         String getVoteQuery = "SELECT choice_number FROM vote WHERE pin_id = ? AND poll_id = ?";
         int choiceNumber = -1;
 
@@ -269,6 +271,7 @@ public class PollDao {
     }
 
     public int createVote(String pollId, String choiceNumber) throws SQLException  {
+        pollId = pollId.toUpperCase();
         String createVoteQuery = "INSERT INTO vote (pin_id, poll_id, choice_number, create_timestamp) values(?, ?, ?, ?)";
         String checkVoteQuery = "SELECT * FROM vote WHERE poll_id = ? AND pin_id = ?";
         try (Connection connection = DBConnection.getConnection();
@@ -305,6 +308,7 @@ public class PollDao {
     }
 
     public void updateVote(int pinId, String pollId, int choiceNumber) throws SQLException  {
+        pollId = pollId.toUpperCase();
         //TODO: need to pre-validate if pin_id & poll_id exist (will do when load vote results to update)
         String updateVoteQuery = "UPDATE vote SET choice_number = ?, create_timestamp = ?  WHERE pin_id = ? AND poll_id = ?";
         try (Connection connection = DBConnection.getConnection();
