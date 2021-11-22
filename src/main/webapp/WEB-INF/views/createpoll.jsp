@@ -91,6 +91,6 @@
 </div>
 
 <%@ include file="sharedViews/footer.html" %>
-<script src="javascript/PollEdit.js"></script>
+<script src="<%=request.getContextPath()%>/javascript/PollEdit.js"></script>
 </body>
 </html>

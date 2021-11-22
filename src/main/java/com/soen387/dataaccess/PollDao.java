@@ -110,7 +110,7 @@ public class PollDao {
                 int choiceNumber = voteResult.getInt("choice_number");
                 votesAsList.add(choiceNumber);
             }
-            int[] votes = new int[votesAsList.size()];
+            int[] votes = new int[choices.length];
             for (Integer x: votesAsList){
                 votes[x-1]++;
             }
