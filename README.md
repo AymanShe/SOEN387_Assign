@@ -30,10 +30,23 @@ architecture, 2) handling data and file formats, and 3) using databases.
 - Change the password in src/main/resources/Dbinfo.properties to match the login info of your MYSQL Database.
 - Move the userbase.json file located at the root folder to the following path: C:/soen387/
 
-**UML:** <BR/>
-![alt text]()
+# **UML:** <BR/>
+## **Class Diagram:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+
+## **Sequence Diagrams:** <BR/>
+### **Download Poll Data :** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/DownloadSequenceDiagram.png)
+ <BR/>
+### **Create Poll :** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/CreatePollSequenceDiagram.png)
+
+## **Entity Relation Diagram :** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/EntityRelationDiagram.png)
 
 
+
+<!-- 
 **Assignment 1:** <BR/>
 **Project Description:**
 This assignment targets: 1) understanding java web technology 2) understanding http server, 
@@ -41,4 +54,4 @@ servlets and jsp, and request and response objects 3) understanding and processi
 content-types, and data encoding.
 
 **UML:** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML_a1.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML_a1.png) -->
