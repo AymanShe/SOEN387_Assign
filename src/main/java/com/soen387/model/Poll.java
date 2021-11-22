@@ -29,7 +29,9 @@ public class Poll implements Serializable {
 	private String pollId;
 
 	public String getPollId() {
-		return pollId.toUpperCase();
+		if (pollId != null)
+			pollId = pollId.toUpperCase();
+		return pollId;
 	}
 
 	public void setPollId(String pollId) {
