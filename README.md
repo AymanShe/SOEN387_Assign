@@ -12,8 +12,10 @@ Ayman Alshehri    - 24796810
 **Github link:**
 https://github.com/RemineralizedWater/SOEN387_Assign
 
-**Password to Poll Manager page is:**
-iliketrains
+**Account credentials are:**
+Ghislain -> iliketrains
+Michael -> complicated
+Ayman -> password123
 
 
 **Assignment 2:** <BR/>
