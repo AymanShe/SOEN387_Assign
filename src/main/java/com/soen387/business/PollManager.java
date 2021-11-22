@@ -177,8 +177,8 @@ public class PollManager implements Serializable {
             throw new PollNotFoundException("Cannot download the poll results when none exists.");
         }
 
-        if (poll.getStatus() != Poll.PollStatus.released) {
-            throw new PollStateException("Cannot download the poll results while the Poll is not in the released state.");
+        if (poll.getStatus() != Poll.PollStatus.released && poll.getStatus() != Poll.PollStatus.closed) {
+            throw new PollStateException("Cannot download the poll results while the Poll is not in the released or closed state.");
         }
 
 		String content = "";
