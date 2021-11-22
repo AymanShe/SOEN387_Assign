@@ -8,14 +8,15 @@ Ayman Alshehri    - 24796810
 - IntelliJ IDEA 2021.2.2 (Ultimate Edition)
 - Tomcat 9.0.54
 - Java 17
+- MySQL80 
 
 **Github link:**
 https://github.com/RemineralizedWater/SOEN387_Assign
 
-**Account credentials are:**
-Ghislain -> iliketrains
-Michael -> complicated
-Ayman -> password123
+**Account credentials are:** 
+- Ghislain -> iliketrains
+- Michael -> complicated
+- Ayman -> password123
 
 
 **Assignment 2:** <BR/>
