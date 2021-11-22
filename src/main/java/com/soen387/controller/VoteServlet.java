@@ -55,6 +55,10 @@ public class VoteServlet extends HttpServlet {
             String pollId = pathInfo.substring(1);
             Poll poll = pollManager.getPoll(pollId);
 
+            if (poll == null){
+                response.sendRedirect(request.getContextPath() + "?error=Poll not found");
+                return;
+            }
             //only allow voting if the poll is running or released
             if (poll.getStatus() != Poll.PollStatus.running && poll.getStatus() != Poll.PollStatus.released) {
                 response.sendRedirect(request.getContextPath() + "?error=You cannot access a poll that is not running or released");

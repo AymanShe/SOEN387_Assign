@@ -199,7 +199,11 @@ public class PollManager implements Serializable {
 	}
 
 	public Poll getPoll(String pollId) {
-		return pollDao.getPoll(pollId);
+		Poll poll = pollDao.getPoll(pollId);
+		if (poll.getPollId() == null){
+			return null;
+		}
+		return poll;
 	}
 
 	public void releasePoll(Poll poll) {

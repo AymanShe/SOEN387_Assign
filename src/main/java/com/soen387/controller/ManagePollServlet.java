@@ -65,6 +65,10 @@ public class ManagePollServlet extends HttpServlet {
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String pollId = pathInfo.substring(1);
             Poll poll = pollManager.getPoll(pollId);
+            if (poll == null){
+                response.sendRedirect(request.getContextPath() + "?error=Poll not found");
+                return;
+            }
             //check if the logged user is the creator
             if (!SessionManager.getAuthenticatedUserName(request.getSession()).equalsIgnoreCase(poll.getCreatedBy())){
                 response.sendRedirect(request.getContextPath() + "?error=You cannot access a poll that is not created by you");

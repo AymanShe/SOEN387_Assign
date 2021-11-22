@@ -2,6 +2,7 @@ package com.soen387.controller;
 
 
 import com.soen387.business.PollManager;
+import com.soen387.model.Poll;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,31 +16,19 @@ import java.sql.SQLException;
 @WebServlet(name = "ValidatePinPollServlet", value = {"/ValidatePinPoll", "/validatepinpoll"})
 public class ValidatePinPollServlet extends HttpServlet {
     PollManager pollManager = new PollManager();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String enteredPinId = request.getParameter("pinId");
         String enteredPollId = request.getParameter("pollId");
-        //TODO: need to pre-validate if pin_id & poll_id exist
 
-        if (enteredPinId == null) {
-            //TODO: Search DB if poll exists (used hardcode to test)
-            boolean pollExists = true;
-            if (pollExists) {
-                //TODO: Do vote with createVote (generate new pin)
-                String returnUrl = request.getParameter("returnurl");
-                if (returnUrl != null && !returnUrl.isEmpty()) {
-                    response.sendRedirect(request.getContextPath() + "/" + returnUrl);
-                } else {
-                    response.sendRedirect(request.getContextPath());
-                }
-            } else {
-                //TODO: Handle invalid Poll entry
-                throw new IOException();
-            }
+        if (enteredPinId == null || enteredPinId.isEmpty()) {
+            //shift the responsibility to the VoteServlet
+            response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId);
         } else {
             int choiceNumber = pollManager.getChoiceNumber(enteredPinId, enteredPollId);
             boolean voteExists = false;
-            if (choiceNumber > -1){
+            if (choiceNumber > 0) {
                 voteExists = true;
             }
             if (voteExists) {
@@ -47,9 +36,10 @@ public class ValidatePinPollServlet extends HttpServlet {
                 request.setAttribute("pinId", enteredPinId);
 
                 response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId + "?pinId=" + enteredPinId + "&choiceNumber=" + choiceNumber);
+                return;
             } else {
-                //TODO: Handle invalid Pin & Poll entry
-                response.sendRedirect(request.getContextPath() + "/vote/" + enteredPollId);
+                response.sendRedirect(request.getContextPath() + "?error=Vote not found for the provided PIN ID");
+                return;
             }
         }
     }
