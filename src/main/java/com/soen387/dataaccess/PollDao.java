@@ -86,6 +86,7 @@ public class PollDao {
                 poll.setQuestion(pollResult.getString("question"));
                 poll.setStatus(Poll.PollStatus.valueOf(pollResult.getString("status")));
                 poll.setReleaseDate(pollResult.getTimestamp("release_timestamp"));
+                poll.setCreatedBy(pollResult.getString("created_by"));
             }
 
             getChoicesStatement.setString(1, pollId);
