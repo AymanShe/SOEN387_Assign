@@ -11,6 +11,22 @@
 <div class="container">
 
     <jsp:useBean id='poll' class='com.soen387.business.PollManager' scope="application"/>
+
+    <%
+        String errorMessage = request.getParameter("error");
+        if (errorMessage != null) {
+    %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= errorMessage %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <%
+        }
+    %>
+
+
     <br/>
     <h1>Polling System</h1>
     <br/>
@@ -41,5 +57,10 @@
     <a href="Download">Download Poll</a>
 </div>
 <%@ include file="sharedViews/footer.html" %>
+<script>
+    $( document ).ready(function() {
+        history.pushState(null, "", location.href.split("?")[0]);
+    });
+</script>
 </body>
 </html>

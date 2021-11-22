@@ -71,9 +71,11 @@ public class PollDao {
         String getPollQuery = "SELECT * FROM poll WHERE poll_id = ?";
         //TODO recomended to make all query use named parameter
         String getChoicesQuery = "SELECT * FROM choice WHERE poll_id = ?";
+        String getVotesQuery = "SELECT * FROM vote WHERE poll_id = ?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement getPollStatement = connection.prepareStatement(getPollQuery);
-             PreparedStatement getChoicesStatement = connection.prepareStatement(getChoicesQuery)) {
+             PreparedStatement getChoicesStatement = connection.prepareStatement(getChoicesQuery);
+             PreparedStatement getVotesStatement = connection.prepareStatement(getVotesQuery)) {
 
             getPollStatement.setString(1, pollId);
 
@@ -84,6 +86,7 @@ public class PollDao {
                 poll.setQuestion(pollResult.getString("question"));
                 poll.setStatus(Poll.PollStatus.valueOf(pollResult.getString("status")));
                 poll.setReleaseDate(pollResult.getTimestamp("release_timestamp"));
+                poll.setCreatedBy(pollResult.getString("created_by"));
             }
 
             getChoicesStatement.setString(1, pollId);
@@ -98,6 +101,20 @@ public class PollDao {
             }
             Choice[] choices = choicesAsList.toArray(new Choice[choicesAsList.size()]);
             poll.setChoices(choices);
+
+            getVotesStatement.setString(1, pollId);
+            ResultSet voteResult = getVotesStatement.executeQuery();
+            List<Integer> votesAsList = new ArrayList();
+            while (voteResult.next()) {
+                int choiceNumber = voteResult.getInt("choice_number");
+                votesAsList.add(choiceNumber);
+            }
+            int[] votes = new int[votesAsList.size()];
+            for (Integer x: votesAsList){
+                votes[x-1]++;
+            }
+            poll.setVotes(votes);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -183,22 +200,28 @@ public class PollDao {
     public void editPoll(Poll poll) throws SQLException {
         //update poll title and question
 
-        String updatePollQuery = "UPDATE poll set title = ?, question = ? WHERE poll_id = ?";
+        String updatePollQuery = "UPDATE poll set title = ?, question = ?, status = ? WHERE poll_id = ?";
         String deleteChoicesQuery = "DELETE FROM choice WHERE poll_id = ?";
+        String deleteVotesQuery = "DELETE FROM vote WHERE poll_id = ?";
         String insertChoiceQuery = "INSERT INTO choice (poll_id, text, description, choice_number) values (?, ? ,? ,?)";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement updatePollStatement = connection.prepareStatement(updatePollQuery);
              PreparedStatement deleteChoicesStatement = connection.prepareStatement(deleteChoicesQuery);
-             PreparedStatement insertChoiceStatement = connection.prepareStatement(insertChoiceQuery)) {
+             PreparedStatement insertChoiceStatement = connection.prepareStatement(insertChoiceQuery);
+             PreparedStatement deleteVotesStatement = connection.prepareStatement(deleteVotesQuery)) {
 
             updatePollStatement.setString(1, poll.getName());
             updatePollStatement.setString(2, poll.getQuestion());
-            updatePollStatement.setString(3, poll.getPollId());
+            updatePollStatement.setString(3, Poll.PollStatus.created.toString());
+            updatePollStatement.setString(4, poll.getPollId());
 
             int updatePollResult = updatePollStatement.executeUpdate();
 
             deleteChoicesStatement.setString(1, poll.getPollId());
             int deleteChoiceResult = deleteChoicesStatement.executeUpdate();
+
+            deleteVotesStatement.setString(1, poll.getPollId());
+            int deleteVoteResult = deleteVotesStatement.executeUpdate();
 
             for (Choice c : poll.getChoices()) {
                 insertChoiceStatement.setString(1, poll.getPollId());
