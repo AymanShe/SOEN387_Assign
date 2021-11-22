@@ -21,24 +21,29 @@ public class VoteServlet extends HttpServlet {
 
         if (pathInfo != null && !pathInfo.isEmpty()) {
             //capture the pin id
-            String pinId = request.getParameter("pinId");
+            String enteresPinId = request.getParameter("pinId");
             //capture the poll id
             String pollId = pathInfo.substring(1);
             //capture the choice
             String choiceNumber = request.getParameter("choice");
             //insert the vote into db
+            int pinId = 0;
+            String status = "";
             try {
                 //TODO: logic to createVote or updateVote
-                if (pinId == null || pinId.equals("") || pinId.equals("null")) {
-                    pollManager.createVote(pollId, choiceNumber);
+                if (enteresPinId == null || enteresPinId.equals("") || enteresPinId.equals("null")) {
+                    pinId = pollManager.createVote(pollId, choiceNumber);
+                    status = "new";
                 } else {
-                    pollManager.updateVote(pinId, pollId, choiceNumber);
+                    pollManager.updateVote(enteresPinId, pollId, choiceNumber);
+                    pinId = Integer.parseInt(enteresPinId);
+                    status = "edit";
                 }
             } catch (PollException e) {
                 e.printStackTrace();
             }
 
-            response.sendRedirect(request.getContextPath());
+            response.sendRedirect(request.getContextPath() + "/vote/" + pollId + "?pinId=" + pinId + "&choiceNumber=" + choiceNumber + "&status=" + status);
         }
     }
 
@@ -61,9 +66,11 @@ public class VoteServlet extends HttpServlet {
 
             String choiceNumber = request.getParameter("choiceNumber");
             String pinId = request.getParameter("pinId");
+            String status = request.getParameter("status");
             if (pinId != null && !pinId.isEmpty()) {
                 request.setAttribute("choiceNumber", choiceNumber);
                 request.setAttribute("pinId", pinId);
+                request.setAttribute("status", status);
             }
 
             //forward to the view page

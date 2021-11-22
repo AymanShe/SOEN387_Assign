@@ -79,6 +79,23 @@
 
 <%@ include file="sharedViews/navbar.jsp" %>
 <div class="container">
+
+    <%
+        String selectedChoice = request.getParameter("choiceNumber");
+        String status = request.getParameter("status");
+        if (status != null && (status.equals("new") || status.equals("edit"))) {
+    %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Your vote has been registered successfully. You PIN for this vote is <strong><%=request.getParameter("pinId")%></strong>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <%
+        }
+    %>
+
+
     <h1>Vote on Poll</h1>
     <div class="card">
         <div class="card-body">
@@ -102,20 +119,25 @@
                     <!--TODO: If updateVote, ensure previous DB vote table choice_number checked. getPinId() doesn't exist.-->
                     <%
                         for (Choice choice : ManagedPoll.getChoices()) {
-                            String selectedChoice = request.getParameter("choiceNumber");
                             String checked = "";
+                            String description = choice.getDescription();
                             if (selectedChoice != null && !selectedChoice.isEmpty() && Integer.parseInt(selectedChoice) == choice.getNumber()) {
                                 checked = "checked";
+                            }
+                            if (description == null){
+                                description = "";
+                            }else{
+                                description = "(" + description + ")";
                             }
                             if (ManagedPoll.getStatus() == Poll.PollStatus.running) {
 
                     %>
                     <input type="radio" name="choice" value="<%= choice.getNumber() %>" <%= checked %>>
-                    <%= choice.getText()%>(<%=choice.getDescription()%>)<br/>
+                    <%= choice.getText()%><%= description%><br/>
                     <%
                     } else {
                     %>
-                    Choice #<%= choice.getNumber() %>: <%= choice.getText()%>(<%=choice.getDescription()%>)<br/>
+                    Choice #<%= choice.getNumber() %>: <%= choice.getText()%><%= description%><br/>
                     <%
                             }
                         }
@@ -132,19 +154,24 @@
             </form>
         </div>
     </div>
+    <% if (ManagedPoll.getStatus() == Poll.PollStatus.valueOf("released")) {%>
+    <h2>Results</h2>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+
+    <%} else {%>
+    <h2>Results will show once the poll is released</h2>
+    <%}%>
+    <br/>
 </div>
+
+
+
 <%@ include file="sharedViews/footer.html" %>
-
-<!--TODO: re-add chart-->
-<% if (ManagedPoll.getStatus() == Poll.PollStatus.valueOf("released")) {%>
-<h2>Poll Google Chart</h2>
-<!--Div that will hold the pie chart-->
-<div id="chart_div"></div>
-
-<%} else {%>
-<h2>No Google chart as Poll Not Yet Released</h2>
-<%}%>
-<br/>
-<a href="<% out.print(request.getContextPath()); %>">Return to Home Page</a>
+<script>
+    $( document ).ready(function() {
+        history.pushState(null, "", location.href.split("?")[0]);
+    });
+</script>
 </body>
 </html>

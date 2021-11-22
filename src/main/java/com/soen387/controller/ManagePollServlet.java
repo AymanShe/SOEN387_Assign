@@ -37,7 +37,7 @@ public class ManagePollServlet extends HttpServlet {
                 break;
             case "delete":
                 pollManager.deletePoll(poll);
-                response.sendRedirect(request.getContextPath());
+                response.sendRedirect(request.getContextPath() + "/Manage");
                 return;
             case "edit":
                 response.sendRedirect(request.getContextPath() + "/edit/" + poll.getPollId());

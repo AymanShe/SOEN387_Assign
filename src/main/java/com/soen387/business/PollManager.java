@@ -281,9 +281,13 @@ public class PollManager implements Serializable {
 		return pollDao.getChoiceNumber(pinId, pollId);
 	}
 
-	public void createVote(String pollId, String choiceNumber) throws PollException  {
+	public int createVote(String pollId, String choiceNumber) throws PollException  {
 		try {
-			pollDao.createVote(pollId, choiceNumber);
+			int pinId = pollDao.createVote(pollId, choiceNumber);
+			if (pinId == 0){
+				throw new PollException("Something went wrong. You vote wasn't registered. Please try again later.");
+			}
+			return pinId;
 		} catch (SQLException e) {
 			throw new PollException(e.getMessage());
 		}
