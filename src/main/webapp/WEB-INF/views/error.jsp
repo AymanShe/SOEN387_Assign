@@ -1,5 +1,6 @@
 <%@ page import="com.soen387.controller.Constants" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page isErrorPage="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +10,10 @@
 <body>
 <%@ include file="sharedViews/navbar.jsp" %>
 <div class="container">
-    <% out.print(((Exception)request.getAttribute("error")).toString()); %>
+    <h3> Unexpected ERROR: <br/> <%= request.getAttribute("error") %> </h3>
 </h1>
 <br/>
-<a href="<% out.print(request.getContextPath()); %>">Return to home page</a>
+<a href="<%= request.getContextPath() %>">Return to home page</a>
 </div>
 <%@ include file="sharedViews/footer.html" %>
 </body>
