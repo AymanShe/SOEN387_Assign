@@ -64,6 +64,10 @@ public class ManagePollServlet extends HttpServlet {
         //fetch the poll using the PollManager
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String pollId = pathInfo.substring(1);
+            if (pollId.isEmpty()){
+                response.sendRedirect(request.getContextPath() + "?error=Poll not found");
+                return;
+            }
             Poll poll = pollManager.getPoll(pollId);
             if (poll == null){
                 response.sendRedirect(request.getContextPath() + "?error=Poll not found");
