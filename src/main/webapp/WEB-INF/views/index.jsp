@@ -30,8 +30,6 @@
     <br/>
     <h1>Polling System</h1>
     <br/>
-    <a href="PollManager">Poll Manager</a>
-    <br/>
     <br/>
     <div class="card">
         <div class="card-body">
@@ -53,8 +51,6 @@
         </div>
     </div>
     <br/>
-    <br/>
-    <a href="Download">Download Poll</a>
 </div>
 <%@ include file="sharedViews/footer.html" %>
 <script>
