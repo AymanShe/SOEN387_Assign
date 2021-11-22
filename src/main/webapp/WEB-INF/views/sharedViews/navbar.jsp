@@ -22,9 +22,6 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="<%= request.getContextPath() %>/Manage">Manage</a>
                         <a class="dropdown-item" href="<%= request.getContextPath() %>/Create">Create New</a>
-                        <a class="dropdown-item" href="#">View</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Download</a>
                     </div>
                 </li>
                 <%
