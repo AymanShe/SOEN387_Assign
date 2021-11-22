@@ -16,7 +16,7 @@
 <body>
 <%@ include file="sharedViews/navbar.jsp" %>
 <div class="container">
-    <h1>New Poll Form</h1>
+    <h1>Edit Poll Form</h1>
     <div class="card">
         <div class="card-body">
             <form action="<%= request.getContextPath() %>/Edit" method="post">
@@ -66,6 +66,6 @@
     </div>
 </div>
 <%@ include file="sharedViews/footer.html" %>
-<script src="javascript/PollEdit.js"></script>
+<script src="<%=request.getContextPath()%>/javascript/PollEdit.js"></script>
 </body>
 </html>
