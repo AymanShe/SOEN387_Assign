@@ -109,7 +109,10 @@ public class PollDao {
                 int choiceNumber = voteResult.getInt("choice_number");
                 votesAsList.add(choiceNumber);
             }
-            int[] votes = votesAsList.stream().mapToInt(i->i).toArray();
+            int[] votes = new int[votesAsList.size()];
+            for (Integer x: votesAsList){
+                votes[x-1]++;
+            }
             poll.setVotes(votes);
 
         } catch (SQLException e) {
