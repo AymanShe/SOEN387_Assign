@@ -1,11 +1,10 @@
 package com.soen387.controller;
 
-import com.soen387.dataaccess.UserBaseLoader;
-import com.soen387.model.User;
-import com.soen387.model.UserBase;
+import com.soen387.dataaccess.UserBaseFileLoader;
+import com.soen387.usermanager.User;
+import com.soen387.usermanager.UserBase;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 public abstract class SessionManager {
     public static boolean isUserAuthenticated(HttpSession session){
@@ -21,7 +20,7 @@ public abstract class SessionManager {
         return user.getName();
     }
     public static void loginUser(String enteredUsername, String enteredPassword, HttpSession session) {
-        UserBase userBase = UserBaseLoader.getUserBase();
+        UserBase userBase = new UserBase(new UserBaseFileLoader());
 
         if (userBase.login(enteredUsername, enteredPassword)) {
             session.setAttribute("ManagerAccess", "true");
