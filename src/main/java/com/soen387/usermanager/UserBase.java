@@ -67,12 +67,10 @@ public class UserBase {
 
     }
 
-    public void createUser(String name, String password, String email) {
-        boolean nameAvailable = true;
+    public void createUser(String name, String password, String email) throws DuplicateUserException {
         for (User user : userList) {
             if (user.getName().compareToIgnoreCase(name) == 0) {
-                nameAvailable = false;
-                break;
+                throw new DuplicateUserException("The username has already been taken");
             }
         }
 
