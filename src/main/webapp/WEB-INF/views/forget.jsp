@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Zander
   Date: 10-Dec-21
-  Time: 3:28 PM
+  Time: 4:42 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,11 +14,13 @@
 <body>
 <%@ include file="sharedViews/navbar.jsp" %>
 
-
 <div class="container">
-    We have sent you an email please follow the instructions there.
+    <form method="post" action="Forget">
+        <label>Username</label>
+        <input name="username" type="text" required>
+        <input name="Login" type="submit">
+    </form>
 </div>
-
 <%@ include file="sharedViews/footer.html" %>
 </body>
 </html>

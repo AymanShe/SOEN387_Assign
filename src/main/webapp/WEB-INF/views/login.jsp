@@ -21,7 +21,7 @@
         <input name="password" type="password">
         <input name="Login" type="submit" class="btn btn-primary">
     </form>
-    <a href="<%= request.getContextPath() %>/forget">Return to home page</a>
+    <a href="<%= request.getContextPath() %>/forget">I forgot my password.</a>
 </div>
 <%@ include file="sharedViews/footer.html" %>
 </body>
