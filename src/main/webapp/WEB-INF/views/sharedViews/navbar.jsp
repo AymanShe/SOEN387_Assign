@@ -32,7 +32,7 @@
         <%
             if (SessionManager.isUserAuthenticated(request.getSession())) {
         %>
-        <span class="navbar-text">Welcome <%= SessionManager.getAuthenticatedUserName(request.getSession()) %></span>
+        <span class="navbar-text">Welcome <%= SessionManager.getAuthenticatedUserName(request.getSession()) %></span><a href="<%= request.getContextPath() %>/change">Change password</a>
         <div class="d-flex justify-content-end">
             &#160<a class="btn btn-secondary" href="<%= request.getContextPath() %>/Logout">Logout</a>
         </div>
