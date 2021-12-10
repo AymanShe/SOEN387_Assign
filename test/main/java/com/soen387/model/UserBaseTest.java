@@ -1,8 +1,7 @@
 package main.java.com.soen387.model;
 
-import com.soen387.dataaccess.UserBaseLoader;
-import com.soen387.model.User;
-import com.soen387.model.UserBase;
+import com.soen387.usermanager.User;
+import com.soen387.usermanager.UserBase;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Before;
@@ -80,6 +79,7 @@ public class UserBaseTest {
         userbase.createUser("name1", "password1", "email1@hotmail.com");
     }
 
+    @Test
     public void UserBaseToJsonTest() {
         JSONArray jsonUserbase = userbase.toJson();
 
@@ -90,6 +90,9 @@ public class UserBaseTest {
         assertNotNull(userbase.getUserByName((String)jsonUser.get("name")));
     }
 
+
+    /*
+    @Test
     public void LoadJsonTest() {
         JSONArray jsonUserbase = new JSONArray();
         JSONObject jsonUser = new JSONObject();
@@ -107,7 +110,7 @@ public class UserBaseTest {
 
         jsonUserbase.add(jsonUser);
 
-        userbase.loadUserBase(jsonUserbase);
+        userbase.loadUserBase();
 
         User user = userbase.getUserById(0);
 
@@ -115,4 +118,6 @@ public class UserBaseTest {
         assertEquals(name, user.getName());
         assertEquals(email, user.getEmail());
     }
+    */
+
 }

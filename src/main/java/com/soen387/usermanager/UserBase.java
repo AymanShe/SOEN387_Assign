@@ -1,28 +1,33 @@
-package com.soen387.model;
+package com.soen387.usermanager;
 
-import com.soen387.controller.Utility;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class UserBase {
 
     private LinkedList<User> userList;
     private int highestId = 0;
+    private UserBaseLoader loader;
 
     public UserBase() {
         userList = new LinkedList<User>();
         highestId = 0;
     }
 
-    public void loadUserBase(JSONArray userListJson) {
+    public UserBase(UserBaseLoader _loader) {
+        userList = new LinkedList<User>();
+        highestId = 0;
+        loader = _loader;
+        loadUserBase();
+    }
+
+    public void loadUserBase() {
+        if (loader == null) return;
+        JSONArray userListJson = loader.loadUserBase();
+
         userList = new LinkedList<User>();
         highestId = 0;
 
@@ -38,11 +43,19 @@ public class UserBase {
             String name = (String) userJson.get("name");
             String password = (String) userJson.get("password");
             String email = (String) userJson.get("email");
+            boolean activated = (boolean) userJson.get("activated");
+            String activationCode = (String) userJson.get("activationCode");
 
             if (id > highestId) highestId = id;
 
-            userList.add(new User(id, name, password, email));
+            userList.add(new User(id, name, password, email, activated, activationCode));
         }
+    }
+
+    public void saveUserBase() {
+        if (loader == null) return;
+
+        loader.saveUserBase(toJson());
     }
 
     public JSONArray toJson() {

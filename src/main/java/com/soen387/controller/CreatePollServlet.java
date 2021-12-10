@@ -1,10 +1,8 @@
 package com.soen387.controller;
 
 import com.soen387.business.PollManager;
-import com.soen387.dataaccess.PollDao;
 import com.soen387.model.Choice;
 import com.soen387.model.Poll;
-import com.soen387.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
