@@ -19,16 +19,40 @@ https://github.com/RemineralizedWater/SOEN387_Assign
 - Ayman -> password123
 
 
-**Assignment 2:** <BR/>
+**Assignment 3:** <BR/>
 **Project Description:**
-This assignment targets implementing web applications with an emphasis on 1) layered
-architecture, 2) handling data and file formats, and 3) using databases.
+This assignment targets 1) architectural patterns and 2) test driven development.
 
 **Instructions:**
 - In IntelliJ, add the Dependencies for the Jar files (File -> Project Structure -> Libraries -> + -> Java -> Add all jar files in the src/main/webapp/WEB-INF/lib folder)
 - Create the MYSQL Database using the sql script.sql file located at the root folder.
 - Change the password in src/main/resources/Dbinfo.properties to match the login info of your MYSQL Database.
 - Move the userbase.json file located at the root folder to the following path: C:/soen387/
+- In IntelliJ, also add the Dependencies for JUnit (File -> Project Structure -> Libraries -> + -> From Maven -> Search for "junit" and add most recent non-snapshot version)
+
+# **UML:** <BR/>
+## **Class Diagram:** <BR/>
+### **Business layer:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+ <BR/>
+### **User Management layer:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+ <BR/>
+### **Email Gateway layer:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+
+## **Sequence Diagrams:** <BR/>
+### **User Sign-up:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/DownloadSequenceDiagram.png)
+ <BR/>
+### **User Change-Password:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/CreatePollSequenceDiagram.png)
+
+
+<!-- **Assignment 2:** <BR/>
+**Project Description:**
+This assignment targets implementing web applications with an emphasis on 1) layered
+architecture, 2) handling data and file formats, and 3) using databases.
 
 # **UML:** <BR/>
 ## **Class Diagram:** <BR/>
@@ -42,7 +66,7 @@ architecture, 2) handling data and file formats, and 3) using databases.
 ![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/CreatePollSequenceDiagram.png)
 
 ## **Entity Relation Diagram :** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/EntityRelationDiagram.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/EntityRelationDiagram.png) -->
 
 
 
