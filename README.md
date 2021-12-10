@@ -32,17 +32,21 @@ This assignment targets 1) architectural patterns and 2) test driven development
 
 # **UML:** <BR/>
 ## **Class Diagram:** <BR/>
+### **Business layer:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+ <BR/>
+### **User Management layer:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+ <BR/>
+### **Email Gateway layer:** <BR/>
 ![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
 
 ## **Sequence Diagrams:** <BR/>
-### **Download Poll Data :** <BR/>
+### **User Sign-up:** <BR/>
 ![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/DownloadSequenceDiagram.png)
  <BR/>
-### **Create Poll :** <BR/>
+### **User Change-Password:** <BR/>
 ![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/CreatePollSequenceDiagram.png)
-
-## **Entity Relation Diagram :** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/EntityRelationDiagram.png)
 
 
 <!-- **Assignment 2:** <BR/>
