@@ -65,6 +65,14 @@
         </div>
     </div>
     <br/>
+    <div class="card">
+        <div class="card-body">
+            <form action="${pageContext.request.contextPath}/Email" method="post">
+                <input type="submit" name="sendEmail" value="Send Email" />
+            </form>
+        </div>
+    </div>
+    <br/>
 </div>
 <%@ include file="sharedViews/footer.html" %>
 <script>
