@@ -4,10 +4,8 @@ import com.soen387.usermanager.User;
 
 public class GenerateRealReceiverEmail implements GenerateReceiverEmail {
 
-    public String getReceiver() {
-        User user = new User();
-        user.setEmail("realReceiverEmail@gmail.com");
-        String receiver = user.getEmail();
-        return receiver;
+    public String getReceiver(User receiver) {
+        String receiverEmail = receiver.getEmail();
+        return receiverEmail;
     }
 }

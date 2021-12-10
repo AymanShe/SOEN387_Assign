@@ -31,9 +31,8 @@ public class UserBase {
         userList = new LinkedList<User>();
         highestId = 0;
 
-        String userListJsonString = "";
-
-        System.out.println(userListJsonString);
+        //String userListJsonString = "";
+        //System.out.println(userListJsonString);
 
         JSONParser parser = new JSONParser();
 

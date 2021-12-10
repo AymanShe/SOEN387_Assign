@@ -19,7 +19,7 @@ public class UserBaseFileLoader implements UserBaseLoader {
     public JSONArray loadUserBase() {
         String userListJsonString = "";
         File file = new File(path);
-        System.out.println(file.getAbsolutePath());
+        //System.out.println(file.getAbsolutePath());
         try (Scanner scanner = new Scanner(file)) {
             scanner.useDelimiter("\\Z");
             userListJsonString = scanner.next();
@@ -27,7 +27,7 @@ public class UserBaseFileLoader implements UserBaseLoader {
             e.printStackTrace();
         }
 
-        System.out.println(userListJsonString);
+        //System.out.println(userListJsonString);
 
         JSONParser parser = new JSONParser();
 

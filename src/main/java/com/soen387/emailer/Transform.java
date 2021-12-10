@@ -2,15 +2,22 @@ package com.soen387.emailer;
 
 import com.soen387.usermanager.User;
 
-import static com.soen387.usermanager.UserManager.generateToken;
-
 public class Transform {
 
-    public static String transformContentToHTML() {
+    // TODO: int messageType to enum
+    public static String transformContentToHTML(User receiver, int messageType) {
         String content = "Here is an email for the receiver.";
-        String token = generateToken();
+        String token = receiver.getActivationCode();
 
-        String contentToHTML = "<HTML>" + content + "<br><br>Activation Code: " + token + "</HMTL>";
+        String contentToHTML = "";
+
+        switch(messageType) {
+            case 1:
+                contentToHTML = "<HTML>" + content + "<br><br>Activation Code: " + token + "</HTML>";
+                break;
+            case 2:
+            default:
+        }
 
         return contentToHTML;
     }
