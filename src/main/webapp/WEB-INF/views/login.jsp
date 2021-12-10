@@ -13,13 +13,16 @@
 </head>
 <body>
 <%@ include file="sharedViews/navbar.jsp" %>
-<form method="post" action="Login<%= request.getParameter("returnurl") == null ? "" : "?returnurl=" + request.getParameter("returnurl") %>">
-    <label>Username</label>
-    <input name="username" type="text">
-    <label>Password</label>
-    <input name="password" type="password">
-    <input name="Login" type="submit">
-</form>
+<div class="container">
+    <form method="post" action="Login<%= request.getParameter("returnurl") == null ? "" : "?returnurl=" + request.getParameter("returnurl") %>">
+        <label>Username</label>
+        <input name="username" type="text">
+        <label>Password</label>
+        <input name="password" type="password">
+        <input name="Login" type="submit" class="btn btn-primary">
+    </form>
+    <a href="<%= request.getContextPath() %>/forget">Return to home page</a>
+</div>
 <%@ include file="sharedViews/footer.html" %>
 </body>
 </html>

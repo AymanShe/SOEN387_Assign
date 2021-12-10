@@ -28,11 +28,9 @@ public class SignupServlet extends HttpServlet {
         //if success redirect
         RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.ViewsBaseLink + "activate.jsp");
         dispatcher.forward(request, response);
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO check if the user is already signed in
         if (SessionManager.isUserAuthenticated(request.getSession())) {
             response.sendRedirect(request.getContextPath() + "?error=You're already signed in. You have to logout to create a new account.");
             return;
