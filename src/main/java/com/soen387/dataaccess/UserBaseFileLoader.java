@@ -1,7 +1,8 @@
 package com.soen387.dataaccess;
 
 import com.soen387.controller.Utility;
-import com.soen387.model.UserBase;
+import com.soen387.usermanager.UserBase;
+import com.soen387.usermanager.UserBaseLoader;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -11,18 +12,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class UserBaseLoader {
-
-    private static UserBase userBase;
+public class UserBaseFileLoader implements UserBaseLoader {
 
     private static String path = Utility.readProperties("userbaseInfo.properties").getProperty("userbase.path");
 
-    public static UserBase getUserBase() {
-        if (userBase == null) return loadUserBase();
-        else return userBase;
-    }
-
-    private static UserBase loadUserBase() {
+    public JSONArray loadUserBase() {
         String userListJsonString = "";
         File file = new File(path);
         System.out.println(file.getAbsolutePath());
@@ -39,20 +33,16 @@ public class UserBaseLoader {
 
         try {
             JSONArray userListJson = (JSONArray) parser.parse(userListJsonString);
-
-            userBase = new UserBase();
-            userBase.loadUserBase(userListJson);
-            return userBase;
+            return userListJson;
 
         } catch (ParseException e) {
-            userBase = null;
             e.printStackTrace();
             return null;
         }
     }
 
-    public static void saveUserBase() {
-        JSONArray userListJson = getUserBase().toJson();
+    public void saveUserBase(JSONArray userListJson) {
+        //JSONArray userListJson = getUserBase().toJson();
         try (FileWriter fileWriter = new FileWriter(path)) {
             fileWriter.write(userListJson.toString());
         } catch (IOException e) {
