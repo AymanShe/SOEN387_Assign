@@ -33,20 +33,23 @@ This assignment targets 1) architectural patterns and 2) test driven development
 # **UML:** <BR/>
 ## **Class Diagram:** <BR/>
 ### **Business layer:** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML%20diagrams/Business_UML_Class_Diagram.png)
  <BR/>
 ### **User Management layer:** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML%20diagrams/User_Management_UML_Class_Diagram.png)
  <BR/>
 ### **Email Gateway layer:** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UMLDiagram.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML%20diagrams/Email_Gateway_UML_Class_Diagram.png)
 
 ## **Sequence Diagrams:** <BR/>
 ### **User Sign-up:** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/DownloadSequenceDiagram.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML%20diagrams/Signup_Sequence_Diagram.png)
  <BR/>
 ### **User Change-Password:** <BR/>
-![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/CreatePollSequenceDiagram.png)
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML%20diagrams/Change_Password_Sequence_Diagram.png)
+ <BR/>
+### **User Forgot-Password:** <BR/>
+![alt text](https://github.com/RemineralizedWater/SOEN387_Assign/blob/master/UML%20diagrams/Forget_Password_Sequence_Diagram.png)
 
 
 <!-- **Assignment 2:** <BR/>
