@@ -3,6 +3,7 @@ package com.soen387.controller;
 import com.soen387.business.PollManager;
 import com.soen387.dataaccess.UserBaseFileLoader;
 import com.soen387.emailer.GatewayEmailer;
+import com.soen387.emailer.MessageType;
 import com.soen387.model.Poll;
 import com.soen387.usermanager.User;
 import com.soen387.usermanager.UserBase;
@@ -26,7 +27,7 @@ public class EmailServlet extends HttpServlet {
         //TODO Fix hardcode
         User receiver = userBase.getUserById(1);
         int messageType = 1;
-        sendEmail(receiver, messageType);
+        sendEmail(receiver, MessageType.Activate);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.ViewsBaseLink + "index.jsp");
         dispatcher.forward(request, response);

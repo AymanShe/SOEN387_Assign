@@ -14,6 +14,19 @@
 <body>
 <%@ include file="sharedViews/navbar.jsp" %>
 <div class="container">
+    <%
+        String errorMessage = request.getParameter("error");
+        if (errorMessage != null) {
+    %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= errorMessage %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <%
+        }
+    %>
     <form method="post" action="Login<%= request.getParameter("returnurl") == null ? "" : "?returnurl=" + request.getParameter("returnurl") %>">
         <label>Username</label>
         <input name="username" type="text">
@@ -24,5 +37,10 @@
     <a href="<%= request.getContextPath() %>/forget">I forgot my password.</a>
 </div>
 <%@ include file="sharedViews/footer.html" %>
+<script>
+    $( document ).ready(function() {
+        history.pushState(null, "", location.href.split("?")[0]);
+    });
+</script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.soen387.controller;
 
 import com.soen387.dataaccess.UserBaseFileLoader;
 import com.soen387.emailer.GatewayEmailer;
+import com.soen387.emailer.MessageType;
 import com.soen387.usermanager.User;
 import com.soen387.usermanager.UserBase;
 
@@ -35,7 +36,7 @@ public class ForgetPasswordServlet extends HttpServlet {
 
         user.forgetPassword();
         userBase.saveUserBase();
-        GatewayEmailer.sendEmail(user, 2);
+        GatewayEmailer.sendEmail(user, MessageType.Forget);
         response.sendRedirect(request.getContextPath() + "?info=An email has been sent. Please check your emails for the procedure to reset your password.");
     }
 
