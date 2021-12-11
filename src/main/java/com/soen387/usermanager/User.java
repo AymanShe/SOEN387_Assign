@@ -93,9 +93,13 @@ public class User {
 
         return false;
     }
+    public boolean compareToken(String code) {
+        return code.equals(activationCode);
+    }
 
     public void forgetPassword() {
         activationCode = generateActivationCode();
+        activated = false;
     }
 
     public String getNewPassword(String code) {

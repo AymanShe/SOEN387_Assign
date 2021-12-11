@@ -18,6 +18,8 @@
         <label>New Password</label>
         <input name="password" type="password">
         <input name="Login" type="submit" class="btn btn-primary">
+        <input name="username" type="hidden" value="<%= request.getAttribute("username") %>">
+        <input name="token" type="hidden"  value="<%= request.getAttribute("token") %>">
     </form>
 </div>
 <%@ include file="sharedViews/footer.html" %>

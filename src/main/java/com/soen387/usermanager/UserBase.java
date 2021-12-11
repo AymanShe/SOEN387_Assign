@@ -102,7 +102,7 @@ public class UserBase {
     public boolean login(String username, String password) {
         User user = getUserByName(username);
         if (user == null) return false;
-        return user.comparePassword(password);
+        return user.comparePassword(password) && user.isActivated();
     }
 
     public void hashAllPasswords() {

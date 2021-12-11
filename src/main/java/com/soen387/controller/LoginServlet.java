@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath());
             }
         } else {
-            response.sendRedirect(request.getContextPath());
+            response.sendRedirect(request.getContextPath() + "/login?error=Incorrect credentials or account is not activated.");
         }
     }
 

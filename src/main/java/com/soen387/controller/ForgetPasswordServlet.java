@@ -35,7 +35,7 @@ public class ForgetPasswordServlet extends HttpServlet {
 
         user.forgetPassword();
         userBase.saveUserBase();
-        GatewayEmailer.sendEmail(user, 2);
+        GatewayEmailer.sendEmail(user, 1);
         response.sendRedirect(request.getContextPath() + "?info=An email has been sent. Please check your emails for the procedure to reset your password.");
     }
 

@@ -74,7 +74,7 @@ public class PollManagerServlet extends HttpServlet {
 
         String enteredUsername = request.getParameter("username");
         String enteredPassword = request.getParameter("password");
-        System.out.println(userBase.login(enteredUsername, enteredPassword));
+
         if (userBase.login(enteredUsername, enteredPassword)) {
             request.getSession().setAttribute("ManagerAccess", "true");
             request.getSession().setAttribute("UserID", userBase.getUserByName(enteredUsername));
