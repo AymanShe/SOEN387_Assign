@@ -15,6 +15,8 @@ public class Choice {
 	}
 
 	public Choice() {
+		text = "";
+		description = "";
 	}
 
 	public int getNumber() {
