@@ -28,7 +28,7 @@ This assignment targets 1) architectural patterns and 2) test driven development
 - Create the MYSQL Database using the sql script.sql file located at the root folder.
 - Change the password in src/main/resources/Dbinfo.properties to match the login info of your MYSQL Database.
 - Move the userbase.json file located at the root folder to the following path: C:/soen387/
-- In IntelliJ, also add the Dependencies for JUnit (File -> Project Structure -> Libraries -> + -> From Maven -> Search for "junit" and add most recent non-snapshot version)
+- In IntelliJ, also add the Dependencies for JUnit (File -> Project Structure -> Libraries -> + -> From Maven -> Search for "junit" and add junit:4.11)
 
 # **UML:** <BR/>
 ## **Class Diagram:** <BR/>
