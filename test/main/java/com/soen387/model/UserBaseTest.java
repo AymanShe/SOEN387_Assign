@@ -17,8 +17,11 @@ public class UserBaseTest {
     public void before() {
         userbase = new UserBase();
         userbase.createUser("name1", "password1", "mail1@hotmail.com");
+        userbase.getUserByName("name1").activate(userbase.getUserByName("name1").getActivationCode());
         userbase.createUser("NaMe2", "PaSsWoRd2", "MAil2@hotmail.com");
+        userbase.getUserByName("NaMe2").activate(userbase.getUserByName("NaMe2").getActivationCode());
         userbase.createUser("NAME3", "PASSWORD3", "MAIL3@hotmail.com");
+        userbase.getUserByName("NAME3").activate(userbase.getUserByName("NAME3").getActivationCode());
     }
 
     @Test
@@ -69,6 +72,7 @@ public class UserBaseTest {
 
         assertNotNull(user);
         assertEquals(name, user.getName());
+        user.activate(user.getActivationCode());
         assertTrue(userbase.login(name, password));
         assertNotEquals(password, user.getPassword());
         assertEquals(email, user.getEmail());
