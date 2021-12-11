@@ -18,10 +18,16 @@ public class ChangePasswordServlet extends HttpServlet {
 
         if (SessionManager.isUserAuthenticated(request.getSession())) {
             String enteredPassword = request.getParameter("password");
+            String oldPassword = request.getParameter("oldPassword");
             //TODO validate the input
 
             UserBase userBase = new UserBase(new UserBaseFileLoader());
             User user = userBase.getUserByName(SessionManager.getAuthenticatedUserName(request.getSession()));
+            //TODO compare password
+            if (!user.comparePassword(oldPassword)) {
+                response.sendRedirect(request.getContextPath() + "?error=Old password is not correct");
+                return;
+            }
             user.setPassword(enteredPassword);
             userBase.saveUserBase();
             response.sendRedirect(request.getContextPath() + "?info=Your password has been changed successfully");
