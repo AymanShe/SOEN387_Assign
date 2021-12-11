@@ -55,6 +55,13 @@ public class Poll implements Serializable {
 	}
 
 	public Poll() {
+		name = "";
+		question = "";
+		status = PollStatus.created;
+		choices = new Choice[0];
+		votes = new int[0];
+		releaseDate = null;
+		createdBy = "";
 	}
 
 	public Poll(String _name, String _question, Choice[] _choices) throws PollException {
@@ -67,6 +74,7 @@ public class Poll implements Serializable {
 		choices = _choices;
 		votes = new int[choices.length];
 		releaseDate = null;
+		createdBy = "";
 	}
 
 	// Deep copy
@@ -82,6 +90,7 @@ public class Poll implements Serializable {
 		if (poll.getReleaseDate() != null){
 			releaseDate = new Date(poll.getReleaseDate().getTime());
 		}
+		createdBy = poll.getCreatedBy();
 	}
 	
 	public void addVote(int choiceIndex) {
