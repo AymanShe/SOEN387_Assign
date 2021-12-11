@@ -7,7 +7,7 @@ import static com.soen387.emailer.Transform.transformContentToHTML;
 
 public class GatewayEmailer {
 
-    public static boolean sendEmail (User receiver, int messageType) {
+    public static boolean sendEmail (User receiver, MessageType messageType) {
         String sender = "pollsystem@gmail.com";
         String receiverEmail = getReceiver(receiver);
         String emailHTMLContent = transformContentToHTML(receiver, messageType);

@@ -3,6 +3,7 @@ package com.soen387.controller;
 
 import com.soen387.dataaccess.UserBaseFileLoader;
 import com.soen387.emailer.GatewayEmailer;
+import com.soen387.emailer.MessageType;
 import com.soen387.usermanager.DuplicateUserException;
 import com.soen387.usermanager.User;
 import com.soen387.usermanager.UserBase;
@@ -31,11 +32,12 @@ public class SignupServlet extends HttpServlet {
         }
         catch (DuplicateUserException e) {
             response.sendRedirect(request.getContextPath() + "?error=The username has already been taken.");
+            return;
         }
 
         User user = userBase.getUserByName(enteredUsername);
 
-        GatewayEmailer.sendEmail(user, 1);
+        GatewayEmailer.sendEmail(user, MessageType.Activate);
 
         System.out.println("user signup information is captured.. now save this info generate the token and send an email and redirect");
         System.out.println(String.format("Username: %s. password: %s. email: %s", enteredUsername, enteredPassword, enteredEmail));

@@ -37,5 +37,10 @@
     <a href="<%= request.getContextPath() %>/forget">I forgot my password.</a>
 </div>
 <%@ include file="sharedViews/footer.html" %>
+<script>
+    $( document ).ready(function() {
+        history.pushState(null, "", location.href.split("?")[0]);
+    });
+</script>
 </body>
 </html>
